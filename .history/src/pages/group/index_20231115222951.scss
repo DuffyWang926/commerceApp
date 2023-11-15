@@ -1,0 +1,32 @@
+.group{
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    position: relative;
+    .groupMid{
+        padding:50px 0;
+        width: 300px;
+        margin: auto;
+        img{
+            border-radius: 50px;
+        }
+    }
+    .groupCover{
+        position:absolute;
+        top:0;
+        left:0;
+        height: 150px;
+        width: 100%;
+        background: #fff;
+        font-size:40px;
+    }
+    .coverFoot{
+        position:absolute;
+        bottom:0;
+        left:0;
+        height: 50px;
+        width: 100%;
+        background: #fff;
+    }
+}
+
