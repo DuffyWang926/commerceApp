@@ -1,0 +1,25 @@
+.buyList{
+    padding:100px 0 0 0;
+    display: flex;
+    justify-content: space-around;
+    .footBuy{
+        flex: 1;
+        padding: 0 20px;
+        display: flex;
+        flex-direction: column;
+        .footImg{
+            width: 100%;
+            height: auto;
+            img{
+                border-radius: 20px;
+            }
+        }
+        .footBtn{
+            margin: 20px 0 0 0;
+            background: #ff6200;
+            color: #fffb00;
+            border-radius: 50px;
+        }
+    
+    }
+}

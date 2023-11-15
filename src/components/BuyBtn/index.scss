@@ -1,0 +1,22 @@
+.buyBtn{
+    width: 80%;
+    color: #d71700;
+    width: 80%;
+    border-radius: 50px;
+    background: linear-gradient(180deg,#ffee8e,#ffac3d);
+    font-size: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px auto;
+    padding: 10px 0;
+    animation: myfirst 2s linear 1s infinite alternate;
+    box-shadow: 10px 10px 5px 5px #888888
+}
+
+@keyframes myfirst
+{
+    0%   {transform: scale(1);}
+    50%  {transform: scale(1.05);}
+    100% {transform: scale(1);}
+}

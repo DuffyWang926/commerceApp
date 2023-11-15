@@ -1,0 +1,28 @@
+.orderTipBox{
+    display: flex;
+    justify-content: space-around;
+    padding: 20px 0 0 0;
+    .orderTipItem{
+        .orderTipImgBox{
+            width: 100%;
+            height: 90px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            .orderTipImg{
+                width: 100%;
+                height: 90px;
+            }
+            .orderTipArrow{
+                width: 80%;
+                height: 45px;
+            }
+
+        }
+        .orderTipTxt{
+            padding: 20px 0;
+            font-size: 24px;
+        }
+    }
+    
+}
