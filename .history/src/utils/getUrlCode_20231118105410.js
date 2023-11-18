@@ -15,7 +15,7 @@
       
     })
     if(isAll){
-      return result
+      result
     }else{
       return code
     }

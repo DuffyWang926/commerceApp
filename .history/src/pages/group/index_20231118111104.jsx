@@ -50,6 +50,7 @@ export default class Index extends Component {
     // }
     let imgList = [ group1, group2, group3 ]
     let imgSrc = ''
+    debugger
     if(type < imgList.length){
       imgSrc = imgList[type]
     }
@@ -62,6 +63,7 @@ export default class Index extends Component {
 
   render () {
     const { imgSrc } = this.state
+    debugger
     return (
       <View className='group'>
         

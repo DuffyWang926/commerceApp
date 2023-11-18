@@ -32,6 +32,7 @@ export const changeHomeData = (payload) => {
 export const recordTime = (payload) => {
   return async dispatch => {
     let res = await api.post('/recordTime',payload)
+    debugger
     
     
   }

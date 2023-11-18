@@ -4,9 +4,11 @@
     let paramsList = nextUrl && nextUrl.split('&')
     let code = ''
     let result = {}
+    debugger
     Array.isArray(paramsList) && paramsList.map( (v,i) =>{
       let endList = v && v.split('=')
       if(endList.length > 0){
+        debugger
         if(endList[0] == 'code'){
           code = endList[1]
         }
@@ -15,7 +17,7 @@
       
     })
     if(isAll){
-      return result
+      result
     }else{
       return code
     }

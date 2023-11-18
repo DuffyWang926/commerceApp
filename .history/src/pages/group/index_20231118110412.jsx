@@ -35,15 +35,9 @@ const mapDispatchToProps = (dispatch) =>{
 }
 @connect( mapStateToProps , mapDispatchToProps )
 export default class Index extends Component {
-  constructor(){
-    super()
-    this.state={
-      imgSrc:''
-    }
-  }
   componentDidMount(){
     let url = window.location.href
-    let result = getUrlCode(url,true)
+    let result = getUrlCode(url)
     const { code, type } = result || {}
     // if(code){
     //   this.props.postLogin({code})
@@ -53,19 +47,20 @@ export default class Index extends Component {
     if(type < imgList.length){
       imgSrc = imgList[type]
     }
-    this.setState({
-      imgSrc
-    })
     
   }
  
 
   render () {
-    const { imgSrc } = this.state
+    const title = '饿了么'
+    const btnProps = {
+      msg:'领红包点外卖',
+      url:"https://activity01.yunzhanxinxi.com/link/a0750efe9f833c5633140d2b4f29c0dd"
+    }
     return (
       <View className='group'>
         
-        <Image className='groupMid' src={imgSrc}></Image>
+        <Image className='groupMid' src={group1}></Image>
         <View className='groupCover'>
           闲置群
         </View>

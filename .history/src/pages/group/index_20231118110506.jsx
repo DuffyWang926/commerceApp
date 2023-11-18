@@ -35,15 +35,9 @@ const mapDispatchToProps = (dispatch) =>{
 }
 @connect( mapStateToProps , mapDispatchToProps )
 export default class Index extends Component {
-  constructor(){
-    super()
-    this.state={
-      imgSrc:''
-    }
-  }
   componentDidMount(){
     let url = window.location.href
-    let result = getUrlCode(url,true)
+    let result = getUrlCode(url)
     const { code, type } = result || {}
     // if(code){
     //   this.props.postLogin({code})

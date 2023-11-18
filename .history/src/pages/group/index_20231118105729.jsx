@@ -15,7 +15,6 @@ import BuyBtn from '../../components/BuyBtn'
 import OrderTipCom from '../../components/OrderTipCom'
 const group1 = require("../../assets/group1.jpg")
 const group2 = require("../../assets/group2.jpg")
-const group3 = require("../../assets/group3.jpg")
 const mapStateToProps = (state)=>{
   const { home } = state
   const { userId } = home
@@ -35,37 +34,32 @@ const mapDispatchToProps = (dispatch) =>{
 }
 @connect( mapStateToProps , mapDispatchToProps )
 export default class Index extends Component {
-  constructor(){
-    super()
-    this.state={
-      imgSrc:''
-    }
-  }
   componentDidMount(){
     let url = window.location.href
-    let result = getUrlCode(url,true)
+    let result = getUrlCode(url)
     const { code, type } = result || {}
     // if(code){
     //   this.props.postLogin({code})
     // }
-    let imgList = [ group1, group2, group3 ]
+    let imgList = [ group1, group2 ]
     let imgSrc = ''
     if(type < imgList.length){
       imgSrc = imgList[type]
     }
-    this.setState({
-      imgSrc
-    })
     
   }
  
 
   render () {
-    const { imgSrc } = this.state
+    const title = '饿了么'
+    const btnProps = {
+      msg:'领红包点外卖',
+      url:"https://activity01.yunzhanxinxi.com/link/a0750efe9f833c5633140d2b4f29c0dd"
+    }
     return (
       <View className='group'>
         
-        <Image className='groupMid' src={imgSrc}></Image>
+        <Image className='groupMid' src={group1}></Image>
         <View className='groupCover'>
           闲置群
         </View>
