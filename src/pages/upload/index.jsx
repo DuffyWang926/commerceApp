@@ -4,9 +4,9 @@ import { View, Input, Text, RadioGroup, Radio, Image } from '@tarojs/components'
 // import { AtIcon, AtButton, AtToast } from "taro-ui";
 import './index.scss'
 import { connect } from "../../utils/connect";
-import {
-  getHomeDetail,
-} from "../../actions/home";
+import communityList from "../../constant/comunity";
+
+
 const mapStateToProps = (state)=>{
   const { home } = state
   const { name } = home
@@ -17,9 +17,7 @@ const mapStateToProps = (state)=>{
 }
 const mapDispatchToProps = (dispatch) =>{
   return {
-    getHomeDetail:(payload)=>{
-      dispatch(getHomeDetail(payload));
-    }
+   
   }
 }
 @connect( mapStateToProps , mapDispatchToProps )
@@ -27,23 +25,31 @@ export default class Index extends Component {
 
   constructor(props){
     super(props)
-    const radioList = [
-      {
-        value: '1',
-        text: '猫和老鼠',
-        checked: false
-      },
-      {
-        value: '2',
-        text: '卡通',
-        checked: false
-      },
-      {
-        value: '3',
-        text: '西游记',
-        checked: false
-      },
-    ]
+    console.log('communityList',communityList)
+    let radioList = Array.isArray(communityList) && communityList.map( (v,i) =>{
+      v.value = v.id
+      v.text = v.name + v.sequence
+      v.checked = false
+      return v
+
+    })
+    // const radioList = [
+    //   {
+    //     value: '1',
+    //     text: '猫和老鼠',
+    //     checked: false
+    //   },
+    //   {
+    //     value: '2',
+    //     text: '卡通',
+    //     checked: false
+    //   },
+    //   {
+    //     value: '3',
+    //     text: '西游记',
+    //     checked: false
+    //   },
+    // ]
     // this.state = {
     //   name:'',
     //   radioList,
@@ -54,7 +60,8 @@ export default class Index extends Component {
       name:'dd',
       radioList,
       radioValue:'dd',
-      theme:'dd'
+      theme:'dd',
+      radioItem:{}
     }
 
     
@@ -65,9 +72,11 @@ export default class Index extends Component {
   onRadioChange = (e) =>{
     const { radioList } = this.state
     const { value } = e.detail;
+    let radioItem = {}
     let radioListTemp = Array.isArray(radioList) && radioList.map( (v,i) =>{
       if( v.value == value){
         v.checked = true
+        radioItem =v
       }else{
         v.checked = false
       }
@@ -76,7 +85,8 @@ export default class Index extends Component {
     })
     this.setState({
       radioList:radioListTemp,
-      radioValue:value
+      radioValue:value,
+      radioItem:radioItem
     })
   }
 
@@ -95,7 +105,8 @@ export default class Index extends Component {
   }
 
   onUpload = (e) =>{
-    const { radioValue, name, theme } = this.state
+    const { radioValue, radioItem, name, theme } = this.state
+    const { value, text } = radioItem || {}
     let that = this
     Taro.chooseImage({
       count: 1,
@@ -112,16 +123,21 @@ export default class Index extends Component {
           imgUrl:filePath
         })
         // const url = 'http://127.0.0.1:3000/api/upload'
-        const url = 'https://www.mengshikejiwang.top/api/upload'
+        // const url = 'http://127.0.0.1:3001/api/uploadGroup'
+        
+        const url = 'https://www.mengshikejiwang.top/taxiapi/uploadGroup'
+        // const url = 'https://www.mengshikejiwang.top/api/upload'
+
         
         Taro.uploadFile({
           url,
           filePath,
           name:'gif',
           formData:{
-            name,
             type:radioValue,
-            theme,
+            value,
+            text
+            
           },
           success: res => {
             console.log('[上传文件] 成功：', res)
@@ -166,7 +182,7 @@ export default class Index extends Component {
               {radioNode}
             </RadioGroup>
           </View>
-          <View className='topItem'>
+          {/* <View className='topItem'>
             <Text className='itemTitle'>名称：</Text>
             <Input
               className='itemInput'
@@ -185,7 +201,7 @@ export default class Index extends Component {
                 this.inputThemeChange(e);
               }}
             />
-          </View>
+          </View> */}
         </View>
         <View
           className='uploadBox'

@@ -4,10 +4,10 @@ import Taro from '@tarojs/taro'
 //   key: 'keywordsList'
 // })
 
-// export const formatNumber = (n) => {
-//   n = n.toString()
-//   return n[1] ? n : '0' + n
-// }
+export const formatNumber = (n) => {
+  n = n.toString()
+  return n[1] ? n : '0' + n
+}
 
 export const formatTime = date => {
   const year = date.getFullYear()

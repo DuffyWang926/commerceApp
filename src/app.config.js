@@ -17,6 +17,7 @@ export default {
     'pages/goodJing/index',
     'pages/clientService/index',
     'pages/group/index',
+    'pages/upload/index',
     'pages/search/index'
   ],
   window: {
