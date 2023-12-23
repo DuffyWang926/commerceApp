@@ -5,6 +5,7 @@ import { logError } from '../utils/error'
 // import {baseUrl} from '../../config'
 
 const baseUrl= 'https://www.mengshikejiwang.top/taxiapi'
+// const baseUrl= 'http://127.0.0.1:3000/taxiapi'
 // const baseUrl= 'http://127.0.0.1:3001/taxiapi'
 // const baseUrl= 'http://127.0.0.1:3001/api'
 
@@ -71,7 +72,11 @@ export default {
     let next = new Promise( (res,rej) =>{
       Taro.request(option).then((result) =>{
         res(result.data)
+      }).catch( err =>{
+        console.log('err',err)
       })
+    }).catch( err =>{
+      console.log('err',err)
     })
     // return Taro.request(option)
     return next

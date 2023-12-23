@@ -11,10 +11,11 @@ import {
   getGroupImgs,
 } from "../../actions/group";
 import communityList from "../../constant/comunity";
-const group1 = require("../../assets/group1.jpg")
-const group2 = require("../../assets/group2.jpg")
-const group3 = require("../../assets/group3.jpg")
-const group4 = require("../../assets/group4.jpg")
+const group0 = require("../../assets/group/group0.jpg")
+const group1 = require("../../assets/group/group1.jpg")
+const group2 = require("../../assets/group/group2.jpg")
+const group3 = require("../../assets/group/group3.jpg")
+const group4 = require("../../assets/group/group4.jpg")
 const mapStateToProps = (state)=>{
   const { group } = state
   const { groupImgs } = group
@@ -56,7 +57,7 @@ export default class Index extends Component {
     this.props.getGroupImgs()
 
 
-    let imgList = [ group1, group2, group3, group4 ]
+    let imgList = [ group0, group1, group2, group3, group4, group4 ]
     let imgSrc = ''
     if(type < imgList.length){
       imgSrc = imgList[type]
@@ -66,6 +67,8 @@ export default class Index extends Component {
     })
     
   }
+
+  
  
 
   render () {

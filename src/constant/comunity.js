@@ -23,6 +23,12 @@ let communityList=[
         name:'清河',
         sequence:'2',
     },
+    {
+        id:'104-2',
+        communityId:'104',
+        name:'学知园',
+        sequence:'2',
+    },
 ]
 
 module.exports = communityList

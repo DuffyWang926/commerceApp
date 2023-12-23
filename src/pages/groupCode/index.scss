@@ -1,0 +1,32 @@
+.groupCodePage{
+    width: 100%;
+    display:flex;
+    position: relative;
+    justify-content: center;
+    .codeBox{
+        text-align: center;
+        padding:20px 20px;
+        .codeTop{
+            font-size: 16px;
+        }
+        
+        .codeTitle{
+            font-size: 20px;
+            font-weight: 600;
+            margin-top:-8px;
+        }
+        .codeImg{
+            width:200px;
+            height: 200px;
+            margin-top: -6px;
+        }
+        .codeFoot{
+            font-size: 16px;
+            margin-top: -20px;
+        }
+        
+
+    }
+    
+}
+
