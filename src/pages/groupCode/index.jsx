@@ -40,12 +40,16 @@ export default class Index extends Component {
       type:'',
       imgId:'',
       title:'',
+      sort:'',
+      topCon:'',
+      titleCon:'',
+      footCon:'',
     }
   }
   componentDidMount(){
     let url = window.location.href
     let result = getUrlCode(url,true)
-    const { code, type } = result || {}
+    const { sort, type } = result || {}
     let imgId = ''
     let title = ''
     Array.isArray(communityList) && communityList.forEach( (v,i) =>{
@@ -54,18 +58,35 @@ export default class Index extends Component {
         title = v.name
       }
     })
+    let topCon = '闲置物品变现'
+    let titleCon = ''
+    let footCon = ''
+    if(sort == 0){
+      topCon = '闲置物品变现'
+      titleCon = title + '闲置群'
+      footCon = '淘点物美价廉的宝贝'
+    }else if( sort == 1){
+      topCon = '找对象，找麻友，找舞伴'
+      titleCon = title + '社区交友'
+      footCon = '一起健身，一起遛娃，一起喝酒'
+
+    }
     this.setState({
       type,
       imgId,
       title,
+      sort,
+      topCon,
+      titleCon,
+      footCon,
     })
-    this.getCode(type)
+    this.getCode(type,sort)
     
   }
 
-  getCode(type){
+  getCode(type,sort){
     console.log('getCode')
-    var url = 'https://mengshikejiwang.top/#/pages/group/index?type=' + type 
+    var url = 'https://mengshikejiwang.top/#/pages/group/index?type=' + type + '&sort=' + sort
     let that = this
     qrcode.toDataURL(url, function (err, qrCodeData) {
       if (err) throw err;
@@ -87,57 +108,59 @@ export default class Index extends Component {
  
 
   render () {
-    const { imgSrc, title } = this.state
+    const { imgSrc, title, topCon,
+      titleCon,
+      footCon, } = this.state
     console.log('title', title)
     
     return (
       <View className='groupCodePage'>
         <View className='codeBox'>
           <View className='codeTop'>
-            闲置物品变现
+          {topCon}
           </View>
           <View className='codeTitle'>
-            {title}闲置群
+            {titleCon}
           </View>
           <Image className='codeImg' src={imgSrc}></Image>
           <View className='codeFoot'>
-            淘点物美价廉的宝贝
+          {footCon}
           </View> 
         </View>
         <View className='codeBox'>
           <View className='codeTop'>
-            闲置物品变现
+          {topCon}
           </View>
           <View className='codeTitle'>
-            {title}闲置群
+            {titleCon}
           </View>
           <Image className='codeImg' src={imgSrc}></Image>
           <View className='codeFoot'>
-            淘点物美价廉的宝贝
+          {footCon}
           </View> 
         </View>
         <View className='codeBox'>
           <View className='codeTop'>
-            闲置物品变现
+          {topCon}
           </View>
           <View className='codeTitle'>
-            {title}闲置群
+            {titleCon}
           </View>
           <Image className='codeImg' src={imgSrc}></Image>
           <View className='codeFoot'>
-            淘点物美价廉的宝贝
+          {footCon}
           </View> 
         </View>
         <View className='codeBox'>
           <View className='codeTop'>
-            闲置物品变现
+          {topCon}
           </View>
           <View className='codeTitle'>
-            {title}闲置群
+            {titleCon}
           </View>
           <Image className='codeImg' src={imgSrc}></Image>
           <View className='codeFoot'>
-            淘点物美价廉的宝贝
+          {footCon}
           </View> 
         </View>
       </View>
