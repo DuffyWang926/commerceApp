@@ -19,6 +19,7 @@ export default {
     'pages/group/index',
     'pages/groupCode/index',
     'pages/upload/index',
+    'pages/shareGroups/index',
     'pages/search/index'
   ],
   window: {

@@ -54,7 +54,7 @@ export default class Index extends Component {
     let title = ''
     Array.isArray(communityList) && communityList.forEach( (v,i) =>{
       if(i == type){
-        imgId = v.id
+        imgId = v.communityId
         title = v.name
       }
     })

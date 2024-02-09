@@ -33,29 +33,7 @@ export default class Index extends Component {
       return v
 
     })
-    // const radioList = [
-    //   {
-    //     value: '1',
-    //     text: '猫和老鼠',
-    //     checked: false
-    //   },
-    //   {
-    //     value: '2',
-    //     text: '卡通',
-    //     checked: false
-    //   },
-    //   {
-    //     value: '3',
-    //     text: '西游记',
-    //     checked: false
-    //   },
-    // ]
-    // this.state = {
-    //   name:'',
-    //   radioList,
-    //   radioValue:'',
-    //   theme:''
-    // }
+    
     this.state = {
       name:'dd',
       radioList,

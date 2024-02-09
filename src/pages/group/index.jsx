@@ -16,6 +16,7 @@ const group1 = require("../../assets/group/group1.jpg")
 const group2 = require("../../assets/group/group2.jpg")
 const group3 = require("../../assets/group/group3.jpg")
 const group4 = require("../../assets/group/group4.jpg")
+const friendGroup0 = require("../../assets/friends/friend0.jpg")
 const mapStateToProps = (state)=>{
   const { group } = state
   const { groupImgs } = group
@@ -38,32 +39,60 @@ export default class Index extends Component {
       imgSrc:'',
       type:'',
       imgId:'',
+      titie:'',
     }
   }
   componentDidMount(){
     let url = window.location.href
     let result = getUrlCode(url,true)
-    const { code, type } = result || {}
+    const { sort, type } = result || {}
     let imgId = ''
+
     Array.isArray(communityList) && communityList.forEach( (v,i) =>{
       if(i == type){
-        imgId = v.id
+        const { groupList } = v
+        let groupIndex = sort || 0
+        Array.isArray(groupList) && groupList.forEach( (item,index) =>{
+          if(index == groupIndex){
+            imgId = v.id
+
+          }
+        })
+        
       }
     })
+    
+    // this.props.getGroupImgs()
+
+
+    let imgList = [ group0, group1, group2, group3, group4 ]
+    let friendList = [ friendGroup0 ]
+    let imgSrc = ''
+    let title = ''
+    if(sort == 0){
+      if(type < imgList.length){
+        imgSrc = imgList[type]
+      }
+      title = '闲置群'
+
+    }else if(sort == 1){
+      if(type < friendList.length){
+        imgSrc = friendList[type]
+      }
+      title = '社区交友群'
+
+    }else{
+      if(type < imgList.length){
+        imgSrc = imgList[type]
+      }
+      title = '闲置群'
+    }
+    
     this.setState({
       type,
       imgId,
-    })
-    this.props.getGroupImgs()
-
-
-    let imgList = [ group0, group1, group2, group3, group4, group4 ]
-    let imgSrc = ''
-    if(type < imgList.length){
-      imgSrc = imgList[type]
-    }
-    this.setState({
-      imgSrc
+      imgSrc,
+      title,
     })
     
   }
@@ -72,7 +101,7 @@ export default class Index extends Component {
  
 
   render () {
-    const { imgSrc, imgId } = this.state
+    const { imgSrc, imgId, title } = this.state
     const { groupImgs } = this.props
     console.log('groupImgs',groupImgs)
     console.log('imgId',imgId)
@@ -93,7 +122,7 @@ export default class Index extends Component {
         
         <Image className='groupMid' src={imgUrl}></Image>
         <View className='groupCover'>
-          闲置群
+          {title}
         </View>
         <View className='coverFoot'>
         </View>

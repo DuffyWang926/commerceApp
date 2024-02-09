@@ -1,0 +1,43 @@
+.uploadPage{
+    width: 100%;
+    height: 100%;
+    padding:0 0 0 20px;
+    .uploadTop{
+        width: 100%;
+        .topItem{
+            display: flex;
+            align-items: center;
+            padding:10px 0 0 10px;
+            .itemTitle{
+                width:200px;
+            }
+            .itemName{
+                padding: 10px;
+            }
+            .itemRight{
+                flex: 1;
+                display: flex;
+                flex-flow: wrap;
+                .topRadio{
+                    padding: 10px 10px 0 0;
+                }
+            }
+            .itemInput{
+                border:1px solid #333;
+            }
+        }
+    }
+    .shareList{
+        .listLabel{
+            padding:10px;
+        }
+        .listItem{
+            padding:10px;
+            .listImg{
+                width: 200px;
+            }
+        }
+    }
+    
+}
+
