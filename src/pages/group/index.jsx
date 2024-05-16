@@ -16,6 +16,7 @@ const group1 = require("../../assets/group/group1.jpg")
 const group2 = require("../../assets/group/group2.jpg")
 const group3 = require("../../assets/group/group3.jpg")
 const group4 = require("../../assets/group/group4.jpg")
+const group5 = require("../../assets/group/group5.jpg")
 const friendGroup0 = require("../../assets/friends/friend0.jpg")
 const mapStateToProps = (state)=>{
   const { group } = state
@@ -52,9 +53,17 @@ export default class Index extends Component {
       if(i == type){
         const { groupList } = v
         let groupIndex = sort || 0
-        Array.isArray(groupList) && groupList.forEach( (item,index) =>{
+        Array.isArray(groupList) && groupList.forEach( (item,index) =>{ 
           if(index == groupIndex){
-            imgId = v.id
+            let sortId = '0'
+            if(item && item.length > 0){
+              let len = item.length
+              let sonObj = item[len -1]
+              sortId = sonObj.id
+            console.log('groupSort', sonObj, sonObj.id)
+            }
+            
+            imgId = sortId
 
           }
         })
@@ -62,10 +71,10 @@ export default class Index extends Component {
       }
     })
     
-    // this.props.getGroupImgs()
+    this.props.getGroupImgs()
 
 
-    let imgList = [ group0, group1, group2, group3, group4 ]
+    let imgList = [ group0, group1, group2, group3, group4, group5 ]
     let friendList = [ friendGroup0 ]
     let imgSrc = ''
     let title = ''
@@ -79,7 +88,7 @@ export default class Index extends Component {
       if(type < friendList.length){
         imgSrc = friendList[type]
       }
-      title = '社区交友群'
+      title = '相亲交友群'
 
     }else{
       if(type < imgList.length){

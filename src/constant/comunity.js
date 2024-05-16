@@ -41,7 +41,13 @@ let communityList=[
                     sequence:'2',
                     usedGoodsGroupId:'100-0-2',
                     id:'100-0-2'
-                }
+                },
+                {
+                    sequence:'3',
+                    usedGoodsGroupId:'100-0-3',
+                    id:'100-0-3'
+                },
+                
             ],
             [
                 {
@@ -130,6 +136,26 @@ let communityList=[
                     sequence:'2',
                     friendGroupId:'104-1-2',
                     id:'104-1-2',
+                }
+            ]
+        ]
+    },
+    {
+        communityId:'105',
+        name:'奥体',
+        groupList:[
+            [
+                {
+                    sequence:'2',
+                    usedGoodsGroupId:'105-0-2',
+                    id:'105-0-2',
+                }
+            ],
+            [
+                {
+                    sequence:'2',
+                    friendGroupId:'105-1-2',
+                    id:'105-1-2',
                 }
             ]
         ]

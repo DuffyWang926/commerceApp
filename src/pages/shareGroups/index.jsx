@@ -5,6 +5,8 @@ import { View, Input, Text, RadioGroup, Radio, Image } from '@tarojs/components'
 import './index.scss'
 import { connect } from "../../utils/connect";
 import communityList from "../../constant/comunity";
+import getUrlCode from "../../utils/getUrlCode";
+
 const wx0 = require("../../assets/wxList/0.jpg")
 const wx1 = require("../../assets/wxList/1.jpg")
 
@@ -36,32 +38,36 @@ export default class Index extends Component {
     })
     
     this.state = {
-      name:'dd',
       radioList,
-      radioValue:'dd',
-      theme:'dd',
-      radioItem:{},
       wxList:[
         {
-          name:'front1024front',
+          name:'a1b1c1527',
           imgSrc:wx0
         },
         {
-          name:'junzibuyancai',
+          name:'a47124988273',
           imgSrc:wx1
         },
-        // {
-        //   name:'junzibuyancai',
-        //   imgSrc:''
-        // },
+        
       ]
     }
     
   }
+  componentDidMount(){
+    let url = window.location.href
+    let result = getUrlCode(url,true)
+    const { type } = result || {}
+    console.log('type',type)
+    this.setState({
+      type,
+    })
+
+  }
   
 
   render () {
-    const { radioList, imgUrl, wxList } = this.state
+    const { radioList, wxList, type } = this.state
+    const title = '闲置群'
     const radioNode = Array.isArray(radioList) && radioList.map( (v,i) =>{
       let res = (
         <View className='itemName' key={v.text} >{v.text}</View>
@@ -82,17 +88,24 @@ export default class Index extends Component {
     })
     
     return (
-      <View className='uploadPage'>
+      <View className='shareGroupsPage'>
+        <View className='shareGroupsTitle'>
+          {title}
+        </View>
         <View className='uploadTop'>
           <View className='topItem'>
             <Text className='itemTitle'>已有群：</Text>
             {radioNode}
           </View>
         </View>
-        <View className='shareList'>
-          <View className='listLabel'>添加下面wx，拉你进群：</View>
-          {wxListNode}
-        </View>
+        { type != 0 &&
+          <View className='shareList'>
+            <View className='listLabel'>添加下面wx，拉你进群（广告勿扰）：</View>
+            <View className='listBox'>{wxListNode}</View>
+          </View>
+        
+        }
+        
       </View>
     )
   }

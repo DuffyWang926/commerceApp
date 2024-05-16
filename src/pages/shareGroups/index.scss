@@ -1,7 +1,11 @@
-.uploadPage{
+.shareGroupsPage{
     width: 100%;
     height: 100%;
     padding:0 0 0 20px;
+    .shareGroupsTitle{
+        text-align: center;
+        color:#333;
+    }
     .uploadTop{
         width: 100%;
         .topItem{
@@ -31,12 +35,16 @@
         .listLabel{
             padding:10px;
         }
-        .listItem{
-            padding:10px;
-            .listImg{
-                width: 200px;
+        .listBox{
+            display: flex;
+            .listItem{
+                padding:10px 20px;
+                .listImg{
+                    width: 200px;
+                }
             }
         }
+        
     }
     
 }

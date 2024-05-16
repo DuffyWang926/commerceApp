@@ -59,16 +59,21 @@ export default class Index extends Component {
       }
     })
     let topCon = '闲置物品变现'
+    let topSecond = ''
     let titleCon = ''
     let footCon = ''
+    let footSecond = ''
     if(sort == 0){
       topCon = '闲置物品变现'
+      topSecond = '淘点物美价廉的宝贝'
       titleCon = title + '闲置群'
-      footCon = '淘点物美价廉的宝贝'
+      footCon = '偶尔有免费的'
+      footSecond = '玩偶，桌子，沙发…'
     }else if( sort == 1){
-      topCon = '找对象，找麻友，找舞伴'
-      titleCon = title + '社区交友'
-      footCon = '一起健身，一起遛娃，一起喝酒'
+      topCon = '找呀找朋友，找到灵魂伴侣'
+      topSecond = ''
+      titleCon = title + '相亲交友'
+      footCon = '一起看山看水，享受快乐人生'
 
     }
     this.setState({
@@ -77,8 +82,10 @@ export default class Index extends Component {
       title,
       sort,
       topCon,
+      topSecond,
       titleCon,
       footCon,
+      footSecond
     })
     this.getCode(type,sort)
     
@@ -109,8 +116,11 @@ export default class Index extends Component {
 
   render () {
     const { imgSrc, title, topCon,
+      topSecond,
       titleCon,
-      footCon, } = this.state
+      footCon, 
+      footSecond,
+    } = this.state
     console.log('title', title)
     
     return (
@@ -119,17 +129,8 @@ export default class Index extends Component {
           <View className='codeTop'>
           {topCon}
           </View>
-          <View className='codeTitle'>
-            {titleCon}
-          </View>
-          <Image className='codeImg' src={imgSrc}></Image>
-          <View className='codeFoot'>
-          {footCon}
-          </View> 
-        </View>
-        <View className='codeBox'>
-          <View className='codeTop'>
-          {topCon}
+          <View className='codeSecond'>
+          {topSecond}
           </View>
           <View className='codeTitle'>
             {titleCon}
@@ -138,10 +139,16 @@ export default class Index extends Component {
           <View className='codeFoot'>
           {footCon}
           </View> 
+          <View className='codeSecond'>
+          {footSecond}
+          </View> 
         </View>
         <View className='codeBox'>
           <View className='codeTop'>
           {topCon}
+          </View>
+          <View className='codeSecond'>
+          {topSecond}
           </View>
           <View className='codeTitle'>
             {titleCon}
@@ -150,10 +157,15 @@ export default class Index extends Component {
           <View className='codeFoot'>
           {footCon}
           </View> 
-        </View>
-        <View className='codeBox'>
+          <View className='codeSecond'>
+          {footSecond}
+          </View> 
+        </View><View className='codeBox'>
           <View className='codeTop'>
           {topCon}
+          </View>
+          <View className='codeSecond'>
+          {topSecond}
           </View>
           <View className='codeTitle'>
             {titleCon}
@@ -161,6 +173,26 @@ export default class Index extends Component {
           <Image className='codeImg' src={imgSrc}></Image>
           <View className='codeFoot'>
           {footCon}
+          </View> 
+          <View className='codeSecond'>
+          {footSecond}
+          </View> 
+        </View><View className='codeBox'>
+          <View className='codeTop'>
+          {topCon}
+          </View>
+          <View className='codeSecond'>
+          {topSecond}
+          </View>
+          <View className='codeTitle'>
+            {titleCon}
+          </View>
+          <Image className='codeImg' src={imgSrc}></Image>
+          <View className='codeFoot'>
+          {footCon}
+          </View> 
+          <View className='codeSecond'>
+          {footSecond}
           </View> 
         </View>
       </View>

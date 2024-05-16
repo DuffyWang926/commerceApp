@@ -27,8 +27,18 @@ export default class Index extends Component {
     super(props)
     console.log('communityList',communityList)
     let radioList = Array.isArray(communityList) && communityList.map( (v,i) =>{
-      v.value = v.id
-      v.text = v.name + v.sequence
+      let groupList = v.groupList
+      let groupId = '0'
+      if(groupList && groupList.length > 0){
+        let usedGoodList = groupList[0]
+        let len = usedGoodList.length
+        let groupObj = usedGoodList[len-1]
+        groupId = groupObj.id
+
+      }
+      v.value = groupId
+
+      v.text = v.name + groupId
       v.checked = false
       return v
 
@@ -48,6 +58,7 @@ export default class Index extends Component {
 
 
   onRadioChange = (e) =>{
+    debugger
     const { radioList } = this.state
     const { value } = e.detail;
     let radioItem = {}
@@ -103,11 +114,9 @@ export default class Index extends Component {
         // const url = 'http://127.0.0.1:3000/api/upload'
         // const url = 'http://127.0.0.1:3001/api/uploadGroup'
         
-        const url = 'https://www.mengshikejiwang.top/taxiapi/uploadGroup'
-        // const url = 'http://127.0.0.1:3000/taxiapi/uploadGroup'
+        // const url = 'https://mengshikejiwang.top/taxiapi/uploadGroup'
+        const url = 'http://127.0.0.1:3001/taxiapi/uploadGroup'
         
-        // const url = 'https://www.mengshikejiwang.top/api/upload'
-
         
         Taro.uploadFile({
           url,
@@ -148,7 +157,7 @@ export default class Index extends Component {
     const { radioList, imgUrl } = this.state
     const radioNode = Array.isArray(radioList) && radioList.map( (v,i) =>{
       let res = (
-        <Radio className='topRadio' key={v.value} value={v.value} checked={v.checked}>{v.text}</Radio>
+        <Radio className='topRadio' key={v.text} value={v.value} checked={v.checked}>{v.text}</Radio>
       )
       return res
     })

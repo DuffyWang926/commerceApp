@@ -2,11 +2,6 @@ import { View, Image } from "@tarojs/components";
 import Taro, { getCurrentInstance } from '@tarojs/taro'
 import "./index.scss";
 const reMenImgA = require("../../assets/product/1.jpg")
-const reMenImgB = require("../../assets/product/2.jpg")
-const reMenImgC = require("../../assets/product/3.jpg")
-const zuiXinImgA = require("../../assets/product/4.jpg")
-const zuiXinImgB = require("../../assets/product/5.jpg")
-const zuiXinImgC = require("../../assets/product/6.jpg")
 
 const ImageCom = ({props}) => {
   const { imgId, imgUrl  } = props
