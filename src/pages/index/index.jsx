@@ -129,13 +129,15 @@ export default class Index extends Component {
       let res = (<SwiperItem key={i + 'swiperItem'} >
       <Image src={imgSrc} className='homeImg' ></Image>
     </SwiperItem>)
-      return res
+      return res                             
     })
     const productProps = {
       title:'titletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitle',
       price:3.00,
       oldPrice:5.00,
       location:'朱辛庄',
+      productId:'1',
+      imgUrl:'a',
     }
     return (
       <View className='home'>
@@ -153,6 +155,14 @@ export default class Index extends Component {
         </Swiper>
         {/* <View className='homeSearch'>
           <SearchCom props={searchProps}></SearchCom>
+        </View> */}
+        {/* <View className='homeTap'>
+          <View className='changeType'>
+          分类展示 全部展示
+          </View>
+          <View className='changeType'>
+          筛选
+          </View>
         </View> */}
         <View className='homeContent'>
           <ProductCom props={productProps}></ProductCom>

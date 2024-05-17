@@ -1,19 +1,17 @@
-
-.productCom{
-    width: 45%;
-    height: 250px;
-    max-width: 300px;
-    padding: 20px 0 0 20px;
-    box-sizing: border-box;
-    flex: 1 1 33.33%;
-    .productComImg{
+.productPage{
+    width: 100%;
+    height: 100%;
+    .productSwiper{
         width: 100%;
-        height: 250px; 
+        height: 400px;
+        .homeImg{
+            width: 100%;
+            height: 100%;
+        }
     }
-    .productHigher{
-        height: 300px;
-    }
-    .detail{
+    .productDetail{
+        padding:6px;
+        box-sizing: border-box;
         .title{
             font-size: 20px;
             width: 100%;
@@ -42,5 +40,7 @@
             
         }
     }
-
+   
+    
 }
+

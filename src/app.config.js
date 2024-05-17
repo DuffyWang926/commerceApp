@@ -1,13 +1,11 @@
 export default {
   pages: [
     'pages/index/index',
+    'pages/product/index',
     'pages/share/index',
     'pages/login/index',
     'pages/mine/index',
     'pages/withdraw/index',
-    'pages/xingBake/index',
-    'pages/kenDeJi/index',
-    'pages/dianFei/index',
     'pages/recommend/index',
     'pages/goodJing/index',
     'pages/clientService/index',

@@ -5,20 +5,25 @@ const reMenImgA = require("../../assets/product/1.jpg")
 
 
 const ProductCom = ({props}) => {
-  const { imgId, imgUrl, title, price, oldPrice, location} = props
+  const { productId, imgUrl, title, price, oldPrice, location, type} = props
   const onImgClick = () =>{
     Taro.navigateTo({
-      url:`/pages/product/index?id=${imgId}`
+      url:`/pages/product/index?id=${productId}`
     });
     
   }
   let urlEnd = reMenImgA
+  let comStyle = 'productComImg'
+  if(type == 1){
+    comStyle  = 'productComImg productHigher'
+
+  }
   return (
-    <View className="productCom"  onClick = { () => {onImgClick()}}>
+    <View className='productCom'  onClick = { () => {onImgClick()}}>
       <Image
        src={urlEnd}
        key={urlEnd}
-       className="productComImg"
+       className={comStyle}
       ></Image>
       <View className="detail" >
         <View className="title" >{title}</View>
