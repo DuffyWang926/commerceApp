@@ -6,6 +6,7 @@ import './index.scss'
 import { connect } from "../../utils/connect";
 import communityList from "../../constant/comunity";
 import getUrlCode from "../../utils/getUrlCode";
+import TapCom from "../../components/TapCom";
 
 const mapStateToProps = (state)=>{
   const { home } = state
@@ -80,10 +81,7 @@ export default class Index extends Component {
     })
     
     let deliverData = [
-      {
-        label:'自提',
-        value:0
-      },
+      
       {
         label:'邮寄到付',
         value:1
@@ -96,7 +94,9 @@ export default class Index extends Component {
     ]
 
     let deliverList = Array.isArray(deliverData) && deliverData.map( (v,i) =>{
+      
       v.checked = false
+      
       return v
     })
 
@@ -109,8 +109,10 @@ export default class Index extends Component {
       degreeItem:{},
       deliverList,
       deliverItem:{},
+      address:'',
       price:'',
       oldPrice:'',
+      contact:'',
       brand:'',
       description:'',
     }
@@ -171,16 +173,21 @@ export default class Index extends Component {
   }
 
   onDeliverRadioChange = (e) =>{
+    debugger
     const { deliverList } = this.state
     const { value } = e.detail;
-    let deliverItem = {}
+    let deliverItem = []
+
     let deliverListTemp = Array.isArray(deliverList) && deliverList.map( (v,i) =>{
+      
       if( v.value == value){
         v.checked = true
         deliverItem =v
       }else{
         v.checked = false
       }
+
+      
       return v
 
     })
@@ -206,6 +213,12 @@ export default class Index extends Component {
   inputPriceChange = (e) =>{
     const { value } = e.detail;
     this.setState({
+      address:value
+    })
+  }
+  inputPriceChange = (e) =>{
+    const { value } = e.detail;
+    this.setState({
       price:value
     })
   }
@@ -213,6 +226,12 @@ export default class Index extends Component {
     const { value } = e.detail;
     this.setState({
       oldPrice:value
+    })
+  }
+  inputContactChange = (e) =>{
+    const { value } = e.detail;
+    this.setState({
+      contact:value
     })
   }
   inputBrandChange = (e) =>{
@@ -342,10 +361,21 @@ export default class Index extends Component {
                 </RadioGroup>
               </View>
               <View className='topItem'>
-                <Text className='itemTitle'>送货方式：</Text>
+                <Text className='itemTitle'>送货方式（可多选）：</Text>
+                <Radio className='topRadio' key={'自提'} value={0} checked={true}>自提</Radio>
                 <RadioGroup className='itemRight' onChange={(e) =>{this.onDeliverRadioChange(e)}}>
                   {deliverNode}
                 </RadioGroup>
+              </View>
+              <View className='topItem'>
+                <Text className='itemTitle'>地址：</Text>
+                <Input
+                  className='itemInput'
+                  type='text'
+                  onInput={(e) => {
+                    this.inputAddressChange(e);
+                  }}
+                />
               </View>
               <View className='topItem'>
                 <Text className='itemTitle'>价格：</Text>
@@ -368,6 +398,16 @@ export default class Index extends Component {
                   }}
                 />
                 （元）
+              </View>
+              <View className='topItem'>
+                <Text className='itemTitle'>联系方式（微信号）：</Text>
+                <Input
+                  className='itemInput'
+                  type='text'
+                  onInput={(e) => {
+                    this.inputContactChange(e);
+                  }}
+                />
               </View>
               <View className='topItem'>
                 <Text className='itemTitle'>品牌：</Text>
@@ -398,13 +438,14 @@ export default class Index extends Component {
           onClick = {(e) => {
               this.onUpload(e);
             }}>
-          <View >
-            <Text>上传图片</Text>
+          <View className='uploadLabel'>
+            <Text >上传图片（最多四张）</Text>
           </View>
-          <View  >
+          <View  className='imgBox'>
             <Image src={imgUrl} bindtap="previewImg"></Image>
           </View>
         </View>
+        <TapCom ></TapCom>
         
       </View>
     )

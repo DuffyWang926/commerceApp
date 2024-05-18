@@ -43,6 +43,11 @@ export default class TapCom extends Component{
         title:'首页'
       },
       {
+        url:`/pages/upload/index`,
+        type:1,
+        title:'卖闲置'
+      },
+      {
         url:`/pages/mine/index`,
         type:2,
         title:'我的'

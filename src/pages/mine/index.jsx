@@ -107,6 +107,14 @@ export default class Index extends Component {
     })
   }
 
+  onMyGoods = () =>{
+    let url = 'pages/myproducts/index?id=1'
+    Taro.navigateTo({
+      url
+    })
+  }
+
+
   
 
   
@@ -132,7 +140,7 @@ export default class Index extends Component {
           </View>
           <View className='mineInfoRight' onClick={this.onShare}>
             <Image className='mineShareImg' src={shareImg}></Image>
-            <View>分享赚佣</View>
+            <View>分享赚积分</View>
           </View>
           
         </View>
@@ -142,7 +150,7 @@ export default class Index extends Component {
               0.00
             </View>
             <View className='moneyTitle'>
-              累计收益
+              金币
             </View>
           </View>
           <View className='moneyType'>
@@ -150,7 +158,7 @@ export default class Index extends Component {
               0.00
             </View>
             <View className='moneyTitle'>
-              今日收益
+              代金券
             </View>
           </View>
           <View className='moneyType'>
@@ -158,19 +166,17 @@ export default class Index extends Component {
               0.00
             </View>
             <View className='moneyTitle'>
-              昨日收益
-            </View>
-          </View>
-          <View className='moneyType'>
-            <View className='moneySum'>
-              0.00
-            </View>
-            <View className='moneytitle'>
-              在路上
+              总积分
             </View>
           </View>
         </View>
-        <View className='wallet'>
+        <View className='myTools'>
+          <View className='myGoods'>
+            <Text className='homeButton' onClick={this.onMyGoods}>我的商品</Text>
+          </View>
+
+        </View>
+        {/* <View className='wallet'>
           <View className='walletMoneyBox'>
             <Image className='walletMoney' src={moneyImg}></Image>
             <View className='moneyType'>
@@ -186,7 +192,7 @@ export default class Index extends Component {
             提现
           </View>
 
-        </View>
+        </View> */}
         <View className='clientService' onClick={this.onClientService}>
           <Image className='mineClientImg' src={clientImg}></Image>
           <View>

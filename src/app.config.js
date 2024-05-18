@@ -2,6 +2,7 @@ export default {
   pages: [
     'pages/index/index',
     'pages/product/index',
+    'pages/myproducts/index',
     'pages/share/index',
     'pages/login/index',
     'pages/mine/index',

@@ -1,0 +1,16 @@
+.tabBar {
+    display: flex;
+    justify-content: space-around;
+    border:1px solid #aaa;
+    border-radius: 10px;
+    padding:10px;
+    box-sizing: border-box;
+    .tabItem{
+      border-radius: 10px;
+    }
+  }
+  
+  .tabBar > .tabActive {
+    background-color: orange;
+    padding:10px 20px;
+  }

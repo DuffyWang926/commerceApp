@@ -1,6 +1,6 @@
 import { Component } from 'react'
 import Taro from "@tarojs/taro";
-import { View, TabBar, Swiper, SwiperItem, Image } from '@tarojs/components'
+import { View, Text, Swiper, SwiperItem, Image } from '@tarojs/components'
 // import { AtIcon, AtButton, AtToast } from "taro-ui";
 import './index.scss'
 import { connect } from "../../utils/connect";
@@ -14,6 +14,8 @@ import {
 import SearchCom from "../../components/SearchCom";
 import HomeItem from "../../components/HomeItem";
 import TapCom from "../../components/TapCom";
+import TabsCom from "../../components/TabsCom";
+
 import ProductCom from "../../components/ProductCom";
 const bannerImgA = require("../../assets/banner/banner1.png")
 
@@ -54,7 +56,8 @@ export default class Index extends Component {
 
     this.state={
       bannerList,
-      bannerCurrent:0
+      bannerCurrent:0,
+      currentTab:0,
     }
   }
 
@@ -85,9 +88,9 @@ export default class Index extends Component {
 
   
  
-  changeTab= ()=>{
-    this.props.changeHomeData({ tapCurrent:1})
-  }
+  // changeTab = ()=>{
+  //   this.props.changeHomeData({ tapCurrent:1})
+  // }
   onBannerClick = (obj) => {
     const { bannerList, bannerCurrent } = this.state
     let  url  = ''
@@ -110,6 +113,13 @@ export default class Index extends Component {
     })
 
   }
+  changeTab = (val) => {
+    this.setState({
+      currentTab:val
+    })
+
+  }
+  
 
   
 
@@ -117,7 +127,7 @@ export default class Index extends Component {
   
 
   render () {
-    const { bannerList } = this.state
+    const { bannerList, currentTab } = this.state
     
     const searchProps ={
       url:'/pages/search/index',
@@ -139,6 +149,16 @@ export default class Index extends Component {
       productId:'1',
       imgUrl:'a',
     }
+    const tabsProps = {
+      tabs:[
+        {
+          label:'二手商品',
+          value:0,
+        },
+      ], 
+      currentTab,
+      changeTab:this.changeTab,
+    }
     return (
       <View className='home'>
         <Swiper
@@ -153,6 +173,7 @@ export default class Index extends Component {
           autoplay>
           {bannerListCom}
         </Swiper>
+        < TabsCom props={tabsProps}/>
         {/* <View className='homeSearch'>
           <SearchCom props={searchProps}></SearchCom>
         </View> */}

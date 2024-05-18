@@ -1,14 +1,18 @@
 .uploadPage{
     width: 100%;
     height: 100%;
+    padding:10px;
+    box-sizing: border-box;
     .uploadTop{
         width: 100%;
         .topItem{
             display: flex;
             align-items: center;
             padding:10px 0 0 10px;
+            font-size: 18px;
             .itemTitle{
                 width:200px;
+                
             }
             .itemRight{
                 flex: 1;
@@ -24,13 +28,21 @@
             .itemTextarea{
                 border:1px solid #333;
                 height: 200px;
-                width: 80%;
+                flex:1;
             }
         }
     }
     .uploadBox{
         padding:20px 10px 0;
         box-sizing: border-box;
+        .uploadLabel{
+            font-size: 18px;
+        }
+        .imgBox{
+            border:1px solid #333;
+            width: 200px;
+            height: 200px;
+        }
         .taro-image-core{
             visibility:visible !important;
 
