@@ -71,13 +71,11 @@ export default class Index extends Component {
   onCheckChange = (e) =>{
     const { radioList, chooseList } = this.state
     const { value } = e.detail;
-    debugger
     let radioItem = {}
     let isAdd = false
     let nextChoose = []
     // let radioListTemp = Array.isArray(radioList) && radioList.map( (v,i) =>{
     //   if( v.value == value){
-    //     debugger
     //     v.checked = !v.checked
     //     if(v.checked){
     //       nextChoose = Array.isArray(radioList) && radioList.map( (val,key) =>{

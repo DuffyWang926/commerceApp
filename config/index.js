@@ -5,6 +5,13 @@ import prodConfig from './prod'
 
 // https://taro-docs.jd.com/docs/next/config#defineconfig-辅助函数
 export default defineConfig(async (merge, { command, mode }) => {
+  if (process.env.NODE_ENV === 'dev') {
+    // 本地开发构建配置（不混淆压缩）
+    process.env.BASE_URL =JSON.stringify('http://127.0.0.1:3001/taxiapi');
+    
+  }else{
+    process.env.BASE_URL =JSON.stringify('https://mengshikejiwang.top/taxiapi');
+  }
   const baseConfig = {
     projectName: 'myApp',
     date: '2023-11-15',
@@ -19,6 +26,7 @@ export default defineConfig(async (merge, { command, mode }) => {
     outputRoot: 'dist',
     plugins: [],
     defineConstants: {
+      BASE_URL: process.env.BASE_URL,
     },
     copy: {
       patterns: [
@@ -78,7 +86,10 @@ export default defineConfig(async (merge, { command, mode }) => {
             generateScopedName: '[name]__[local]___[hash:base64:5]'
           }
         }
-      }
+      },
+      // 强制使用 localhost
+      hostname: 'localhost',
+      port: 10086
     },
     rn: {
       appName: 'taroDemo',
@@ -92,7 +103,10 @@ export default defineConfig(async (merge, { command, mode }) => {
   if (process.env.NODE_ENV === 'development') {
     // 本地开发构建配置（不混淆压缩）
     return merge({}, baseConfig, devConfig)
+
   }
-  // 生产构建配置（默认开启压缩混淆等）
-  return merge({}, baseConfig, prodConfig)
+    // 生产构建配置（默认开启压缩混淆等）
+    return merge({}, baseConfig, prodConfig)
+
+  
 })

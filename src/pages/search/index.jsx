@@ -9,7 +9,6 @@ import {
 import SearchCom from "../../components/SearchCom";
 import ImageCom from "../../components/ImageCom";
 import TapCom from "../../components/TapCom";
-const homeImg = require("../../assets/thanks.jpg")
 const mapStateToProps = (state)=>{
   const { search } = state
   const { imgList } = search

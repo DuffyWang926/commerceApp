@@ -3,7 +3,6 @@ import { View, Image, Text } from "@tarojs/components";
 
 import "./index.scss";
 import ImageCom from "../ImageCom";
-const homeImg = require("../../assets/thanks.jpg")
 
 
 const HomeItem = ({props}) => {

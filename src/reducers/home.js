@@ -1,4 +1,4 @@
-
+import Taro from '@tarojs/taro'
 
   
   const INITIAL_STATE = {
@@ -11,19 +11,20 @@
     if(action.type ==  "LOGIN"){
       const { data = {} } = action.payload
       const { userInfo = {} } = data
-      const { userId = '' } = userInfo
-      sessionStorage.setItem("userId", userId);
+      const { id = '' } = userInfo
+      Taro.showToast({
+        title:'登录成功',
+      })
       return {
         ...state,
         userInfo,
-        userId:userId
+        userId:id
       }
 
     }else if( action.type ==  "POSTUSERINFO" ){
       const { data = {} } = action.payload
       const { userInfo = {} } = data
       const { userId = '' } = userInfo
-      sessionStorage.setItem("userId", userId);
       return {
         ...state,
         userInfo,

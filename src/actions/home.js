@@ -2,7 +2,6 @@
 import api from '../services/api'
 export const postLogin = (payload) => {
   return async dispatch => {
-    var userId = sessionStorage.getItem("userId");
     // if(userId){
     //   let res = await api.post('/postUserInfo',{
     //     userId

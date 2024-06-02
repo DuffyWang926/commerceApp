@@ -111,17 +111,17 @@ export default class Index extends Component {
 
   render () {
     const { imgSrc, imgId, title } = this.state
-    const { groupImgs } = this.props
+    const {                                   } = this.props
     console.log('groupImgs',groupImgs)
     console.log('imgId',imgId)
     let imgUrl = ''
-    if(groupImgs && groupImgs.length > 0){
-      groupImgs.forEach( (v) =>{
-        if(v.imgId == imgId){
-          imgUrl = v.imgUrl
-        }
-      })
-    }
+    // if(groupImgs && groupImgs.length > 0){
+    //   groupImgs.forEach( (v) =>{
+    //     if(v.imgId == imgId){
+    //       imgUrl = v.imgUrl
+    //     }
+    //   })
+    // }
     if(!imgUrl){
       imgUrl = imgSrc
     }

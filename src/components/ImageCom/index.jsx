@@ -1,7 +1,6 @@
 import { View, Image } from "@tarojs/components";
 import Taro, { getCurrentInstance } from '@tarojs/taro'
 import "./index.scss";
-const reMenImgA = require("../../assets/product/1.jpg")
 
 const ImageCom = ({props}) => {
   const { imgId, imgUrl  } = props
@@ -12,30 +11,12 @@ const ImageCom = ({props}) => {
     });
     
   }
-  let urlEnd = ''
-  if(imgUrl == 1){
-    urlEnd = reMenImgA
-  }else if(imgUrl == 2){
-    urlEnd = reMenImgB
-  }else if(imgUrl == 3){
-    urlEnd = reMenImgC
-  }else if(imgUrl == 4){
-    urlEnd = zuiXinImgA
-  }else if(imgUrl == 5){
-    urlEnd = zuiXinImgB
-  }else if(imgUrl == 6){
-    urlEnd = zuiXinImgC
-  }else{
-    urlEnd = imgUrl
-  }
-
-
 
   return (
     <View className="imageCom" >
       <Image
-       src={urlEnd}
-       key={urlEnd}
+       src={imgUrl}
+       key={imgUrl}
        onClick = { () => {onImgClick()}}
        className="imageComImg"
       ></Image>

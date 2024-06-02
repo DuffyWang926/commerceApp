@@ -9,6 +9,9 @@ import {
   postLogin
 
 } from "../../actions/home";
+import {
+  getProducts,
+} from "../../actions/product";
 
 // import { AtTabBar } from "taro-ui";
 import SearchCom from "../../components/SearchCom";
@@ -20,13 +23,20 @@ import ProductCom from "../../components/ProductCom";
 const bannerImgA = require("../../assets/banner/banner1.png")
 
 
-const homeImg = require("../../assets/thanks.jpg")
 const mapStateToProps = (state)=>{
-  const { home } = state
+  const { home, product } = state
   const { itemList, tapCurrent } = home
+  const { type, page, pageSize, products, leftProducts,
+    rightProducts, } = product
     return {
       itemList,
-      tapCurrent
+      tapCurrent,
+      type,
+      page,
+      pageSize,
+      products,
+      leftProducts,
+      rightProducts, 
     }
 
 }
@@ -38,6 +48,10 @@ const mapDispatchToProps = (dispatch) =>{
     postLogin:(payload)=>{
       dispatch(postLogin(payload));
     },
+    getProducts:(payload)=>{
+      dispatch(getProducts(payload));
+    },
+    
     
   }
 }
@@ -62,28 +76,30 @@ export default class Index extends Component {
   }
 
   componentDidMount(){
-    let url = window.location.href
-    let code = ''
-    let nextList = url.split('?')
-    let nextUrl = nextList.length > 0 && nextList[1]
-    let paramsList = nextUrl && nextUrl.split('&')
-    let urlUpCode = ''
-    Array.isArray(paramsList) && paramsList.map( (v,i) =>{
-      let endList = v && v.split('=')
-      if(endList.length > 0){
-        if(endList[0] == 'upCode'){
-          urlUpCode = endList[1]
-        }else if(endList[0] == 'code'){
-          code = endList[1]
-        }
-      }
+    const { type, page, pageSize } = this.props
+    // let url = window.location.href
+    // let code = ''
+    // let nextList = url.split('?')
+    // let nextUrl = nextList.length > 0 && nextList[1]
+    // let paramsList = nextUrl && nextUrl.split('&')
+    // let urlUpCode = ''
+    // Array.isArray(paramsList) && paramsList.map( (v,i) =>{
+    //   let endList = v && v.split('=')
+    //   if(endList.length > 0){
+    //     if(endList[0] == 'upCode'){
+    //       urlUpCode = endList[1]
+    //     }else if(endList[0] == 'code'){
+    //       code = endList[1]
+    //     }
+    //   }
       
-    })
-    let upCode = sessionStorage.getItem('upCode') || urlUpCode
+    // })
+    // let upCode = urlUpCode
 
-    if(code){
-      this.props.postLogin({code,upCode})
-    }
+    // if(code){
+    //   this.props.postLogin({code,upCode})
+    // }
+    this.props.getProducts({type, page, pageSize})
   }
 
   
@@ -128,7 +144,33 @@ export default class Index extends Component {
 
   render () {
     const { bannerList, currentTab } = this.state
+    const { 
+      leftProducts,
+      rightProducts, 
+    } = this.props
     
+    const leftProductsNode = Array.isArray(leftProducts) && leftProducts.map( (v,i) =>{
+      const { imgList=[] } = v
+      let imgUrl = imgList.length >0 && imgList[0] 
+      const productProps = {
+        ...v,
+        imgUrl,
+      }
+      let res = (<ProductCom  key={'product' + i} props={productProps}></ProductCom>)
+      return res                             
+    })
+    
+    const rightProductsNode = Array.isArray(rightProducts) && rightProducts.map( (v,i) =>{
+      const { imgList=[] } = v
+      let imgUrl = imgList.length >0 && imgList[0] 
+      const productProps = {
+        ...v,
+        imgUrl,
+      }
+      let res = (<ProductCom  key={'product' + i} props={productProps}></ProductCom>)
+      return res                             
+    })
+
     const searchProps ={
       url:'/pages/search/index',
       changeTab:this.changeTab
@@ -141,14 +183,7 @@ export default class Index extends Component {
     </SwiperItem>)
       return res                             
     })
-    const productProps = {
-      title:'titletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitle',
-      price:3.00,
-      oldPrice:5.00,
-      location:'朱辛庄',
-      productId:'1',
-      imgUrl:'a',
-    }
+    
     const tabsProps = {
       tabs:[
         {
@@ -169,7 +204,7 @@ export default class Index extends Component {
           indicatorActiveColor='#333'
           vertical={false}
           circular
-          indicatorDots
+          indicatorDots={false}
           autoplay>
           {bannerListCom}
         </Swiper>
@@ -186,7 +221,12 @@ export default class Index extends Component {
           </View>
         </View> */}
         <View className='homeContent'>
-          <ProductCom props={productProps}></ProductCom>
+          <View className='leftCon'>
+            {leftProductsNode}
+          </View>
+          <View className='rightCon'>
+            {rightProductsNode}
+          </View>
         </View>
         
         <TapCom ></TapCom>

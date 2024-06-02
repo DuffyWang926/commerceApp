@@ -1,7 +1,7 @@
 export default {
-  navigationBarTitleText: '打车券梦想号',
+  navigationBarTitleText: '梦都二手电商',
   "usingComponents": {
-    "mp-tabs": "@miniprogram-component-plus/tabs"
+    
   }
 
 

@@ -5,7 +5,7 @@ import { View, Text, Swiper, SwiperItem, Image } from '@tarojs/components'
 import './index.scss'
 import { connect } from "../../utils/connect";
 
-const clientImg = require("../../assets/clientService.jpg")
+const clientImg = require("../../assets/wxList/0.jpg")
 const mapStateToProps = (state)=>{
   
 }

@@ -23,13 +23,13 @@ import getUrlCode from "../../utils/getUrlCode";
 const mapStateToProps = (state)=>{
   const { home } = state
   const { userInfo = {},   } = home
-  const { nickname, headimgurl, openid, upCode, userCode } = userInfo
+  const { nickName, headUrl, openid, upCode, id } = userInfo
   
     return {
-      nickname,
-      headimgurl,
+      nickName,
+      headUrl,
       openid,
-      userCode,
+      id,
       upCode
     }
 
@@ -57,7 +57,6 @@ export default class Index extends Component {
     const { userId } = props
     let url = window.location.href
     let code = getUrlCode(url) || ''
-    let upCode = sessionStorage.getItem('upCode') || ''
     if(code && !userId){
       props.postLogin({ code, upCode})
     }
@@ -73,10 +72,11 @@ export default class Index extends Component {
 
   loginClick = async () =>{
     const { path } = getCurrentInstance()?.router || {};
-    let url = 'pages/login/index?oldUrl=' + path
+    let url = '/pages/login/index?oldUrl=' + path
     Taro.navigateTo({
       url
     })
+    
   }
 
   withdraw = () =>{
@@ -120,8 +120,9 @@ export default class Index extends Component {
   
 
   render () {
-    const { nickname, headimgurl, upCode, userCode } = this.props
-    let portraitImgSrc = headimgurl || portraitImg
+    const { nickName, headUrl, upCode, id } = this.props
+    let portraitImgSrc = headUrl || portraitImg
+    console.log('this.props', this.props)
     return (
       <View className='mine'>
         <View className='mineTop'>
@@ -131,10 +132,10 @@ export default class Index extends Component {
           <View className='mineInfoLeft'>
             <Image className='mineImg' src={portraitImgSrc}></Image>
             <View className='mineInfo'>
-              { nickname ? <View onClick={() =>{ this.loginClick()}}>{nickname}</View>
+              { nickName ? <View onClick={() =>{ this.loginClick()}}>{nickName}</View>
               : <View onClick={() =>{ this.loginClick()}}>点击登录</View>
               }
-              <View>ID:{userCode}</View>
+              <View>ID:{id}</View>
               <View>推荐人:{upCode}</View>
             </View>
           </View>

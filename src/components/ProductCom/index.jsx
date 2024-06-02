@@ -1,8 +1,6 @@
 import { View, Image } from "@tarojs/components";
 import Taro, { getCurrentInstance } from '@tarojs/taro'
 import "./index.scss";
-const reMenImgA = require("../../assets/product/1.jpg")
-
 
 const ProductCom = ({props}) => {
   const { productId, imgUrl, title, price, oldPrice, location, type} = props
@@ -12,7 +10,6 @@ const ProductCom = ({props}) => {
     });
     
   }
-  let urlEnd = reMenImgA
   let comStyle = 'productComImg'
   if(type == 1){
     comStyle  = 'productComImg productHigher'
@@ -21,8 +18,8 @@ const ProductCom = ({props}) => {
   return (
     <View className='productCom'  onClick = { () => {onImgClick()}}>
       <Image
-       src={urlEnd}
-       key={urlEnd}
+       src={imgUrl}
+       key={imgUrl}
        className={comStyle}
       ></Image>
       <View className="detail" >

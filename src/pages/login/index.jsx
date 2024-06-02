@@ -1,7 +1,7 @@
 import { Component } from 'react'
 import Taro, { getCurrentInstance } from '@tarojs/taro'
 
-import { View, Input, Image } from '@tarojs/components'
+import { View, Input, Image, Text } from '@tarojs/components'
 import './index.scss'
 import { connect } from "../../utils/connect";
 import {
@@ -54,7 +54,6 @@ export default class Index extends Component {
     this.setState({
       upCode
     })
-    sessionStorage.setItem('upCode',upCode)
     
   }
 
@@ -62,8 +61,40 @@ export default class Index extends Component {
 
   onInputChange = (e) =>{
     let val = e.target.value
-    sessionStorage.setItem('upCode',val)
 
+  }
+  onLogin= () =>{
+    wx.getUserProfile({
+      desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+      success: (res) => {
+        console.log('res',res)
+        let userInfo = res && res.userInfo
+        const { 
+          avatarUrl,
+          city,
+          gender,
+          nickName,
+          province,
+        } = userInfo
+        wx.login({
+            success: res => {
+                // 发送 res.code 到后台换取 openId, sessionKey, unionId（需要后端配合）
+                console.log('res',res)
+                this.props.postLogin({
+                  code:res.code,
+                  avatarUrl,
+                  city,
+                  gender,
+                  nickName,
+                  province,
+                })
+                
+            }
+        });
+      }
+    })
+
+    
   }
 
   
@@ -87,27 +118,28 @@ export default class Index extends Component {
     
     return (
       <View className='login'>
-        <View className='loginTop'>
+        {/* <View className='loginTop'>
           登录
-        </View>
+        </View> */}
         <View className='loginMid'>
           <Image className='midImg' src={logoImg} ></Image>
           <View className='midTitle'>
-            打车券每天领
+            闲置物品变现，淘点实惠宝贝
           </View>
           <View className='midTip'>
-            省一点,赚一点,越赚越快乐
+            让明天的生活更美好！
           </View>
         </View>
         <View className='recommend' >
-          <span>推荐码:</span>
+          <Text>推荐码:</Text>
           <View >
             <Input onInput={this.onInputChange} value={upCode} className="recommendInput"></Input>
-            <span className='recommendTip'>填写推荐码(推荐人的ID)会有更多佣金</span>
+            {/* <span className='recommendTip'>填写推荐码(推荐人的ID)会有更多佣金</span> */}
           </View>
         </View>
-        <View className='loginBtn' >
-          <a href={url} className='loginText'>微信登录</a>
+        <View className='loginBtn' onClick={this.onLogin}>
+          {/* <a href={url} className='loginText'>微信登录</a> */}
+          <Text>登录</Text>
         </View>
       </View>
     )
