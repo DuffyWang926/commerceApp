@@ -1,6 +1,5 @@
 import Taro from "@tarojs/taro";
 import { View, Image, Text } from "@tarojs/components";
-
 import "./index.scss";
 import ImageCom from "../ImageCom";
 

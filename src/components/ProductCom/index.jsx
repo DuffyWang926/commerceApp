@@ -1,12 +1,13 @@
-import { View, Image } from "@tarojs/components";
+import { View, Image, Text } from "@tarojs/components";
 import Taro, { getCurrentInstance } from '@tarojs/taro'
 import "./index.scss";
 
 const ProductCom = ({props}) => {
-  const { productId, imgUrl, title, price, oldPrice, location, type} = props
+  const { id, imgUrl, title, price, oldPrice, location, type, city} = props
+  console.log('props',props)
   const onImgClick = () =>{
     Taro.navigateTo({
-      url:`/pages/product/index?id=${productId}`
+      url:`/pages/product/index?id=${id}`
     });
     
   }
@@ -21,6 +22,7 @@ const ProductCom = ({props}) => {
        src={imgUrl}
        key={imgUrl}
        className={comStyle}
+       mode='aspectFit'
       ></Image>
       <View className="detail" >
         <View className="title" >{title}</View>
@@ -28,9 +30,9 @@ const ProductCom = ({props}) => {
           <View className="price" >￥{price}</View>
           <View className="oldPriceBox" >
             原价 
-            <span className="oldPrice" >{oldPrice}</span>
+            <Text className="oldPrice" >{oldPrice}</Text>
           </View>
-          <View className="location" >{location}</View>
+          <View className="location" >{city}</View>
 
         </View>
       </View>

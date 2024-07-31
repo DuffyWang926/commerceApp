@@ -3,24 +3,41 @@ import { Component } from 'react'
 import { View, RadioGroup, Radio, CheckboxGroup, Checkbox,  Text,} from '@tarojs/components'
 import ProductCom from "../../components/ProductCom";
 
-// import { AtIcon, AtButton, AtToast } from "taro-ui";
 import './index.scss'
 import { connect } from "../../utils/connect";
-import communityList from "../../constant/comunity";
-import getUrlCode from "../../utils/getUrlCode";
-
+import {
+  getProducts,
+  deleteProducts,
+  changePage
+} from "../../actions/product";
 
 const mapStateToProps = (state)=>{
-  const { home } = state
-  const { name } = home
+  const { home, product } = state
+  const { userId } = home
+  const {  userPage, userPageSize, userProducts, userHasMore  } = product
     return {
-      name,
+      userId,
+      userPage, 
+      userPageSize,
+      userProducts,
+      userHasMore
+
     }
 
 }
 const mapDispatchToProps = (dispatch) =>{
   return {
-   
+    getProducts:(payload)=>{
+      dispatch(getProducts(payload));
+    },
+    deleteProducts:(payload)=>{
+      dispatch(deleteProducts(payload));
+    },
+    changePage:(payload)=>{
+      dispatch(changePage(payload));
+    },
+    
+    
   }
 }
 @connect( mapStateToProps , mapDispatchToProps )
@@ -60,69 +77,72 @@ export default class Index extends Component {
     
   }
   componentDidMount(){
-    let url = window.location.href
-    let result = getUrlCode(url,true)
-    const { id } = result || {}
-    this.setState({
-      id,
-    })
+    const {
+       userId,
+      userPage, 
+      userPageSize,
+      userProducts,
+     } = this.props
+     
+    this.props.getProducts({userId, page:userPage, pageSize:userPageSize, isRefresh:true})
 
   }
+  // 底部上拉加载更多数据事件处理函数
+  onReachBottom = () => {
+    const {
+      userId,
+     userPage, 
+     userPageSize,
+     userHasMore,
+    } = this.props
+
+
+    if (userHasMore) {
+      console.log('onReachBottom triggered');
+      let nextpage = userPage + 1
+      this.props.changePage({ userPage:nextpage})
+      this.props.getProducts({userId, page:userPage, pageSize:userPageSize})
+
+      // this.loadMoreData();
+    } else {
+      Taro.showToast({ title: '没有更多商品啦。', icon: 'none' });
+    }
+  };
   onCheckChange = (e) =>{
-    const { radioList, chooseList } = this.state
     const { value } = e.detail;
-    let radioItem = {}
-    let isAdd = false
-    let nextChoose = []
-    // let radioListTemp = Array.isArray(radioList) && radioList.map( (v,i) =>{
-    //   if( v.value == value){
-    //     v.checked = !v.checked
-    //     if(v.checked){
-    //       nextChoose = Array.isArray(radioList) && radioList.map( (val,key) =>{
-    //         if(val.id = v.id){
-    //           isAdd = true
-    //         }
-    //         return val
-    //       })
-    //       radioItem =v
-    //     }
-        
-    //   }
-    //   return v
-
-    // })
-    // if(!isAdd){
-    //   nextChoose.push(radioItem)
-    //   this.setState({
-    //     radioList:radioListTemp,
-    //     chooseList:value
-    //   })
-      
-    // }else{
-    //   this.setState({
-    //     radioList:radioListTemp,
-    //   })
-
-    // }
     this.setState({
       chooseList:value
     })
     
   }
+  onDelete = (e) =>{
+    const {  chooseList } = this.state
+    const {
+      userId,
+     userPage, 
+     userPageSize,
+    } = this.props
+
+    this.props.deleteProducts({ids: chooseList, userId, page: userPage, pageSize: userPageSize, isRefresh:true})
+    
+    
+  }
 
   render () {
     const { radioList,  } = this.state
-    const productProps = {
-      title:'titletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitle',
-      price:3.00,
-      oldPrice:5.00,
-      location:'朱辛庄',
-      productId:'1',
-      imgUrl:'a',
-    }
-    const radioNode = Array.isArray(radioList) && radioList.map( (v,i) =>{
+    const {
+      userProducts,
+    } = this.props
+    
+    const userProductsNode = Array.isArray(userProducts) && userProducts.map( (v,i) =>{
+      const { imgList=[] } = v
+      let imgUrl = imgList.length >0 && imgList[0] 
+      const productProps = {
+        ...v,
+        imgUrl,
+      }
       let res = (
-        <Checkbox className='checkbox-list__checkbox' value={v.value} checked={v.checked} >
+        <Checkbox className='checkbox-list__checkbox' value={v.id} checked={v.checked} >
           <ProductCom props={productProps}></ProductCom>
         </Checkbox>
       )
@@ -138,7 +158,7 @@ export default class Index extends Component {
         </View>
         <View className='myProductsContent'>
             <CheckboxGroup className='productsBox' onChange={(e) =>{this.onCheckChange(e)}}>
-              {radioNode}
+              {userProductsNode}
             </CheckboxGroup>
             
         </View>

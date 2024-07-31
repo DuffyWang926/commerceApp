@@ -7,7 +7,7 @@ import prodConfig from './prod'
 export default defineConfig(async (merge, { command, mode }) => {
   if (process.env.NODE_ENV === 'dev') {
     // 本地开发构建配置（不混淆压缩）
-    process.env.BASE_URL =JSON.stringify('http://127.0.0.1:3001/taxiapi');
+    process.env.BASE_URL =JSON.stringify('http://127.0.0.1:3000/taxiapi');
     
   }else{
     process.env.BASE_URL =JSON.stringify('https://mengshikejiwang.top/taxiapi');

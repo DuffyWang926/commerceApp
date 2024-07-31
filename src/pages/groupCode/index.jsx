@@ -12,11 +12,7 @@ import {
 } from "../../actions/group";
 import communityList from "../../constant/comunity";
 import qrcode from 'qrcode'
-const group0 = require("../../assets/group/group0.jpg")
-const group1 = require("../../assets/group/group1.jpg")
-const group2 = require("../../assets/group/group2.jpg")
-const group3 = require("../../assets/group/group3.jpg")
-const group4 = require("../../assets/group/group4.jpg")
+
 const mapStateToProps = (state)=>{
   const { group } = state
   const { groupImgs } = group

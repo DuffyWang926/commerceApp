@@ -9,9 +9,23 @@
     "miniprogram": {
       "list": [
         {
-          "name": "pages/login/index",
-          "pathName": "pages/login/index",
-          "query": "oldUrl=%2Fpages%2Fmine%2Findex",
+          "name": "pages/clientservice/index",
+          "pathName": "pages/clientservice/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/myproducts/index",
+          "pathName": "pages/myproducts/index",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
+        },
+        {
+          "name": "pages/upload/index",
+          "pathName": "pages/upload/index",
+          "query": "",
           "launchMode": "default",
           "scene": null
         },

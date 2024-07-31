@@ -23,14 +23,15 @@ import getUrlCode from "../../utils/getUrlCode";
 const mapStateToProps = (state)=>{
   const { home } = state
   const { userInfo = {},   } = home
-  const { nickName, headUrl, openid, upCode, id } = userInfo
+  const { nickName, headUrl, openid, upCode, id, points } = userInfo
   
     return {
       nickName,
       headUrl,
       openid,
       id,
-      upCode
+      upCode,
+      points
     }
 
 }
@@ -71,12 +72,21 @@ export default class Index extends Component {
   
 
   loginClick = async () =>{
-    const { path } = getCurrentInstance()?.router || {};
-    let url = '/pages/login/index?oldUrl=' + path
-    Taro.navigateTo({
-      url
-    })
+    // const { path } = getCurrentInstance()?.router || {};
+    // let url = '/pages/login/index?oldUrl=' + path
+    // Taro.navigateTo({
+    //   url
+    // })
     
+    wx.login({
+      success: res => {
+          // 发送 res.code 到后台换取 openId, sessionKey, unionId（需要后端配合）
+          console.log('res',res)
+          this.props.postLogin({
+            code:res.code,
+          })
+      }
+    });
   }
 
   withdraw = () =>{
@@ -101,14 +111,14 @@ export default class Index extends Component {
   }
 
   onClientService = () =>{
-    let url = 'pages/clientservice/index'
+    let url = '/pages/clientService/index'
     Taro.navigateTo({
       url
     })
   }
 
   onMyGoods = () =>{
-    let url = 'pages/myproducts/index?id=1'
+    let url = '/pages/myproducts/index'
     Taro.navigateTo({
       url
     })
@@ -120,29 +130,31 @@ export default class Index extends Component {
   
 
   render () {
-    const { nickName, headUrl, upCode, id } = this.props
+    const { nickName, headUrl, upCode, id, points } = this.props
     let portraitImgSrc = headUrl || portraitImg
     console.log('this.props', this.props)
     return (
       <View className='mine'>
-        <View className='mineTop'>
+        {/* <View className='mineTop'>
           我的
-        </View>
+        </View> */}
         <View className='mineInfoBox'>
           <View className='mineInfoLeft'>
             <Image className='mineImg' src={portraitImgSrc}></Image>
             <View className='mineInfo'>
-              { nickName ? <View onClick={() =>{ this.loginClick()}}>{nickName}</View>
-              : <View onClick={() =>{ this.loginClick()}}>点击登录</View>
+              {/* { nickName ? <View onClick={() =>{ this.loginClick()}}>{nickName}</View>
+              : <View onClick={() =>{ this.loginClick()}} className='homeButton' >点击登录</View>
+              } */}
+              { !id && <View onClick={() =>{ this.loginClick()}} className='homeButton' >点击登录</View>
               }
               <View>ID:{id}</View>
               <View>推荐人:{upCode}</View>
             </View>
           </View>
-          <View className='mineInfoRight' onClick={this.onShare}>
+          {/* <View className='mineInfoRight' onClick={this.onShare}>
             <Image className='mineShareImg' src={shareImg}></Image>
             <View>分享赚积分</View>
-          </View>
+          </View> */}
           
         </View>
         <View className='mineMoney'>
@@ -164,7 +176,7 @@ export default class Index extends Component {
           </View>
           <View className='moneyType'>
             <View className='moneySum'>
-              0.00
+              { points || 0.00}
             </View>
             <View className='moneyTitle'>
               总积分

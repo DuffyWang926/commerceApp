@@ -1,7 +1,6 @@
 import { Component } from 'react'
 import Taro from "@tarojs/taro";
 import { View, Text, Swiper, SwiperItem, Image } from '@tarojs/components'
-// import { AtIcon, AtButton, AtToast } from "taro-ui";
 import './index.scss'
 import { connect } from "../../utils/connect";
 import {
@@ -11,23 +10,23 @@ import {
 } from "../../actions/home";
 import {
   getProducts,
+  changePage
 } from "../../actions/product";
 
-// import { AtTabBar } from "taro-ui";
-import SearchCom from "../../components/SearchCom";
-import HomeItem from "../../components/HomeItem";
 import TapCom from "../../components/TapCom";
 import TabsCom from "../../components/TabsCom";
 
 import ProductCom from "../../components/ProductCom";
-const bannerImgA = require("../../assets/banner/banner1.png")
+const bannerImgA = require("../../assets/banner/banner1.jpg")
 
 
 const mapStateToProps = (state)=>{
   const { home, product } = state
   const { itemList, tapCurrent } = home
   const { type, page, pageSize, products, leftProducts,
-    rightProducts, } = product
+    rightProducts,
+    hasMore,
+   } = product
     return {
       itemList,
       tapCurrent,
@@ -36,7 +35,9 @@ const mapStateToProps = (state)=>{
       pageSize,
       products,
       leftProducts,
-      rightProducts, 
+      rightProducts,
+      hasMore,
+      
     }
 
 }
@@ -51,6 +52,10 @@ const mapDispatchToProps = (dispatch) =>{
     getProducts:(payload)=>{
       dispatch(getProducts(payload));
     },
+    changePage:(payload)=>{
+      dispatch(changePage(payload));
+    },
+    
     
     
   }
@@ -62,7 +67,7 @@ export default class Index extends Component {
     super(props);
     const bannerList = [
       {
-        url:'pages/shareGroups/index',
+        url:'/pages/shareGroups/index',
         imgSrc:bannerImgA
       },
       
@@ -76,31 +81,34 @@ export default class Index extends Component {
   }
 
   componentDidMount(){
-    const { type, page, pageSize } = this.props
-    // let url = window.location.href
-    // let code = ''
-    // let nextList = url.split('?')
-    // let nextUrl = nextList.length > 0 && nextList[1]
-    // let paramsList = nextUrl && nextUrl.split('&')
-    // let urlUpCode = ''
-    // Array.isArray(paramsList) && paramsList.map( (v,i) =>{
-    //   let endList = v && v.split('=')
-    //   if(endList.length > 0){
-    //     if(endList[0] == 'upCode'){
-    //       urlUpCode = endList[1]
-    //     }else if(endList[0] == 'code'){
-    //       code = endList[1]
-    //     }
-    //   }
-      
-    // })
-    // let upCode = urlUpCode
+    const { type, page, pageSize, leftProducts } = this.props
+   
+    this.props.getProducts({type, page, pageSize, isRefresh:true})
 
-    // if(code){
-    //   this.props.postLogin({code,upCode})
-    // }
-    this.props.getProducts({type, page, pageSize})
+   
+    
   }
+
+  onPullDownRefresh = () => {
+    console.log('onPullDownRefresh triggered');
+    
+  };
+
+  // 底部上拉加载更多数据事件处理函数
+  onReachBottom = () => {
+    const { type, page, pageSize, hasMore, } = this.props
+
+    if (hasMore) {
+      console.log('onReachBottom triggered');
+      let nextpage = page + 1
+      this.props.changePage({ page:nextpage})
+      this.props.getProducts({type, page:nextpage, pageSize})
+
+      // this.loadMoreData();
+    } else {
+      Taro.showToast({ title: '没有更多商品啦。', icon: 'none' });
+    }
+  };
 
   
  
@@ -148,7 +156,7 @@ export default class Index extends Component {
       leftProducts,
       rightProducts, 
     } = this.props
-    
+    console.log('leftProducts',leftProducts)
     const leftProductsNode = Array.isArray(leftProducts) && leftProducts.map( (v,i) =>{
       const { imgList=[] } = v
       let imgUrl = imgList.length >0 && imgList[0] 
@@ -171,11 +179,7 @@ export default class Index extends Component {
       return res                             
     })
 
-    const searchProps ={
-      url:'/pages/search/index',
-      changeTab:this.changeTab
-    }
-    
+  
     const bannerListCom = Array.isArray(bannerList) && bannerList.map( (v,i) =>{
       const {imgSrc } = v
       let res = (<SwiperItem key={i + 'swiperItem'} >
@@ -209,9 +213,7 @@ export default class Index extends Component {
           {bannerListCom}
         </Swiper>
         < TabsCom props={tabsProps}/>
-        {/* <View className='homeSearch'>
-          <SearchCom props={searchProps}></SearchCom>
-        </View> */}
+        
         {/* <View className='homeTap'>
           <View className='changeType'>
           分类展示 全部展示

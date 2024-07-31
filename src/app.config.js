@@ -3,20 +3,19 @@ export default {
     'pages/index/index',
     'pages/product/index',
     'pages/myproducts/index',
-    'pages/share/index',
     'pages/login/index',
     'pages/mine/index',
-    'pages/clientService/index',
     'pages/group/index',
     'pages/groupCode/index',
     'pages/upload/index',
     'pages/shareGroups/index',
-    'pages/search/index'
   ],
   window: {
     backgroundTextStyle: 'light',
     navigationBarBackgroundColor: '#fff',
     navigationBarTitleText: 'WeChat',
     navigationBarTextStyle: 'black'
-  }
+  },
+   // 启用全局下拉刷新
+   enablePullDownRefresh: true
 }

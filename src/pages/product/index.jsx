@@ -6,21 +6,23 @@ import './index.scss'
 import { connect } from "../../utils/connect";
 import communityList from "../../constant/comunity";
 import getUrlCode from "../../utils/getUrlCode";
-
-const wx0 = require("../../assets/wxList/0.jpg")
-const wx1 = require("../../assets/wxList/1.jpg")
+import {
+  reportProduct,
+} from "../../actions/product";
 
 const mapStateToProps = (state)=>{
-  const { home } = state
-  const { name } = home
+  const { product } = state
+  const { products } = product
     return {
-      name,
+      products,
     }
 
 }
 const mapDispatchToProps = (dispatch) =>{
   return {
-   
+    reportProduct:(payload)=>{
+      dispatch(reportProduct(payload));
+    },
   }
 }
 @connect( mapStateToProps , mapDispatchToProps )
@@ -48,23 +50,76 @@ export default class Index extends Component {
       },
     ]
     
+    let degreeData = [
+      {
+        label:'未拆封',
+        value:0
+      },
+      {
+        label:'九成新',
+        value:1
+      },
+      {
+        label:'八成新',
+        value:2
+      },
+      {
+        label:'七成新',
+        value:3
+      },
+      {
+        label:'六成新',
+        value:4
+      },
+      {
+        label:'五成新',
+        value:5
+      },
+      {
+        label:'三成新',
+        value:6
+      },
+    ]
+    let deliverData = [
+      
+      {
+        label:'邮寄到付',
+        value:1
+      },
+      {
+        label:'同城包邮',
+        value:2
+      },
+      
+    ]
     this.state = {
       isReport:false,
       isContact:false,
       radioList,
       radioItem:{},
-      
+      productItem:{},
+      degreeData,
+      deliverData
     }
     
   }
   componentDidMount(){
+    const { products} = this.props
     let url = window.location.href
     let result = getUrlCode(url,true)
     const { id } = result || {}
-    this.setState({
-      id,
-      
-    })
+    let productList = products.filter(product => product.id == id);
+    if(productList.length > 0){
+      this.setState({
+        id,
+        productItem:productList[0],
+        
+      })
+
+    }
+    console.log('id',id)
+    console.log('productItem',productList[0])
+    
 
   }
   onReport = () =>{
@@ -85,9 +140,17 @@ export default class Index extends Component {
   }
 
   confirmReport = () =>{
+    const { id, radioItem } = this.state
     this.setState({
       isReport:false
     })
+    this.props.reportProduct(
+      {
+        id,
+        reason:radioItem.label
+      }
+     )
+
   }
   
   onRadioChange = (e) =>{
@@ -111,33 +174,30 @@ export default class Index extends Component {
   }
 
   render () {
-    const { isReport, radioList, isContact } = this.state
-    const { productId, imgUrl, title, price, oldPrice, location, type} =  {
-      title:'titletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitletitle',
-      price:3.00,
-      oldPrice:5.00,
-      location:'朱辛庄',
-      productId:'1',
-      imgUrl:'a',
-    }
-    const bannerList = [
-      {
-        url:'pages/shareGroups/index',
-        imgSrc:wx0
-      },
-      {
-        url:'pages/shareGroups/index',
-        imgSrc:wx1
-      },
-      
-    ]
-    const bannerListCom = Array.isArray(bannerList) && bannerList.map( (v,i) =>{
-      const {imgSrc } = v
+    const { isReport, radioList, isContact, productItem, degreeData, deliverData } = this.state
+    const { imgList, title, price, oldPrice, address, degree, city, deliver, description, contact} =  productItem
+    const bannerListCom = Array.isArray(imgList) && imgList.map( (v,i) =>{
+      console.log('imgList', v)
       let res = (<SwiperItem key={i + 'swiperItem'} >
-      <Image src={imgSrc} className=' productImg' ></Image>
+      <Image src={v} className=' productImg' mode="aspectFit"></Image>
     </SwiperItem>)
       return res                             
     })
+    let degreeVal = ''
+    Array.isArray(degreeData) && degreeData.map( (v,i) =>{
+      if(v.value = degree){
+        degreeVal =  v.label
+      }
+    })
+
+    let deliverVal = ''
+
+    Array.isArray(deliverData) && deliverData.map( (v,i) =>{
+      if(v.value = deliver){
+        deliverVal =  v.label
+      }
+    })
+    deliverVal = '自提，' + deliverVal
 
     const radioNode = Array.isArray(radioList) && radioList.map( (v,i) =>{
       let res = (
@@ -159,27 +219,33 @@ export default class Index extends Component {
           {bannerListCom}
         </Swiper>
         <View className="productDetail" >
-          <View className="title" >{title}</View>
-          <View className="priceBox" >
-            <View className="price" >￥{price}</View>
-            <View className="oldPriceBox" >
-              原价 
-              <span className="oldPrice" >{oldPrice}</span>
+          <View className="detailTop" >
+            <View className="title" >{title}</View>
+            <View className="priceBox" >
+              <View className="price" >￥{price}</View>
+              <View className="oldPriceBox" >
+                原价 
+                <Text className="oldPrice" >{oldPrice}</Text>
+              </View>
             </View>
-            <View className="location" >{location}</View>
+            <View className="degree" >新旧程度：{degreeVal}</View>
           </View>
-          <View className="degree" >新旧程度：{title}</View>
-          <View className="deliver" >取货方式：{title}</View>
-          <View className="deliver" >自提地址：{title}</View>
+          
+          <View className="detailMid" >
+            <View className="deliver" >取货方式：{deliverVal}</View>
+            <View className="location" >城市：{city}</View>
+            <View className="deliver" >自提地址：{address}</View>
+          </View>
+          
         </View>
         <View className="productContent" >
-          <View className="title" >{title}</View>
+          <View className="description" > 商品详情：{description}</View>
         </View>
         <View className="productFoot" >
           <View className="report" onClick={this.onReport} >举报</View>
           <View className="contact" onClick={this.onContact} >微信号
             { isContact && 
-            <Text className='contactId'>WX</Text>
+            <Text className='contactId'>WX:{contact}</Text>
             
             }
           </View>

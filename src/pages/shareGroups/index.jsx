@@ -7,8 +7,7 @@ import { connect } from "../../utils/connect";
 import communityList from "../../constant/comunity";
 import getUrlCode from "../../utils/getUrlCode";
 
-const wx0 = require("../../assets/wxList/0.jpg")
-const wx1 = require("../../assets/wxList/1.jpg")
+
 
 const mapStateToProps = (state)=>{
   const { home } = state
@@ -42,11 +41,9 @@ export default class Index extends Component {
       wxList:[
         {
           name:'a1b1c1527',
-          imgSrc:wx0
         },
         {
           name:'a47124988273',
-          imgSrc:wx1
         },
         
       ]
@@ -70,7 +67,7 @@ export default class Index extends Component {
     const title = '闲置群'
     const radioNode = Array.isArray(radioList) && radioList.map( (v,i) =>{
       let res = (
-        <View className='itemName' key={v.text} >{v.text}</View>
+        <Text className='itemName' key={v.text} >{v.text}</Text>
       )
       return res
     })
@@ -80,7 +77,7 @@ export default class Index extends Component {
         <View className='listItem' key={i}>
           <View>wx 号：{v.name}</View>
           <View>
-            <Image className='listImg' src={v.imgSrc}></Image>
+            <Image className='listImg' src={v.imgSrc} mode="aspectFit"></Image>
           </View>
         </View>
       )
@@ -95,7 +92,10 @@ export default class Index extends Component {
         <View className='uploadTop'>
           <View className='topItem'>
             <Text className='itemTitle'>已有群：</Text>
-            {radioNode}
+            <View >
+              {radioNode}
+            </View>
+            
           </View>
         </View>
         { type != 0 &&

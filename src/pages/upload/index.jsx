@@ -9,12 +9,15 @@ import getUrlCode from "../../utils/getUrlCode";
 import TapCom from "../../components/TapCom";
 import {
   publishProduct,
+  changePage
 } from "../../actions/product";
 const mapStateToProps = (state)=>{
-  const { home } = state
+  const { home, product } = state
   const { userId } = home
+  const { isPublished } = product
     return {
       userId,
+      isPublished
     }
 
 }
@@ -23,6 +26,10 @@ const mapDispatchToProps = (dispatch) =>{
     publishProduct:(payload)=>{
       dispatch(publishProduct(payload));
     },
+    changePage:(payload)=>{
+      dispatch(changePage(payload));
+    },
+    
   }
 }
 @connect( mapStateToProps , mapDispatchToProps )
@@ -337,8 +344,8 @@ export default class Index extends Component {
           
           Taro.uploadFile({
             url:uploadUrl,
-            filePath,
             name:'gif',
+            filePath,
             formData,
             success: res => {
               console.log('[上传文件] 成功：', res)
@@ -389,6 +396,7 @@ export default class Index extends Component {
       brand,
       description,
       imgUrlList,
+      type,
      } = this.state
      const { userId } = this.props
      let deliver = deliverItem.join(',')
@@ -412,6 +420,8 @@ export default class Index extends Component {
      }else if(degreeItem && !degreeItem){
       modalTxt = '请填写新旧程度'
       isWrong = true
+     }else if(userId && !type){
+      modalTxt = '请登录后发布'
      }
      if(isWrong){
       Taro.showModal({
@@ -451,10 +461,36 @@ export default class Index extends Component {
 
 
   }
+  clearData = () =>{
+    this.setState({
+      title:'',
+      radioValue:'',
+      radioItem:{},
+      degreeItem:{},
+      deliverItem:[0],
+      address:'',
+      price:'',
+      oldPrice:'',
+      contact:'',
+      brand:'',
+      description:'',
+      uploadedList:[],
+      imgUrlList:[],
+    })
+    this.props.changePage({isPublished:false})
+
+  }
+  goHome = () =>{
+    Taro.navigateTo({
+      url: '/pages/index/index'
+    })
+    this.clearData()
+  }
 
 
   render () {
     const { type, radioList, imgUrl, degreeList, deliverList, uploadedList } = this.state
+    const { isPublished } = this.props
     console.log('uploadedList', uploadedList)
 
     const radioNode = Array.isArray(radioList) && radioList.map( (v,i) =>{
@@ -491,134 +527,155 @@ export default class Index extends Component {
     
     return (
       <View className='uploadPage'>
-        <View className='uploadTop'>
-          { type == 1 ?
-            <View className='topItem'>
-              <Text className='itemTitle'>类型：</Text>
-              <RadioGroup className='itemRight' onChange={(e) =>{this.onRadioChange(e)}}>
-                {radioNode}
-              </RadioGroup>
+        
+        { isPublished ?
+        <View className='publishedBox' >
+          <View className='publishedTip'>
+            发布成功，审核中……
+          </View>
+          <View className='publishedBtn'>
+            <View className='homeButton' onClick = {this.clearData} >
+              继续发布
             </View>
-            :
-            <View className='uploadDetail'>
+            <View className='homeButton' onClick = {this.goHome}>
+              返回首页
+            </View>
+          </View>
+
+        </View>
+        :
+        <View className='uploadBox'>
+          <View className='uploadTop'>
+            { type == 1 ?
               <View className='topItem'>
-                <Text className='itemTitle'>标题：</Text>
-                <Input
-                  className='itemInput'
-                  type='text'
-                  onInput={(e) => {
-                    this.inputTitleChange(e);
-                  }}
-                />
-              </View>
-              <View className='topItem'>
-                <Text className='itemTitle'>新旧程度：</Text>
-                <RadioGroup className='itemRight' onChange={(e) =>{this.onDegreeRadioChange(e)}}>
-                  {degreeNode}
+                <Text className='itemTitle'>类型：</Text>
+                <RadioGroup className='itemRight' onChange={(e) =>{this.onRadioChange(e)}}>
+                  {radioNode}
                 </RadioGroup>
               </View>
-              <View className='topItem'>
-                <Text className='itemTitle'>送货方式（可多选）：</Text>
-                <Checkbox className='topRadio' key={'自提'} value={0} checked={true}>自提</Checkbox>
-                <CheckboxGroup className='itemRight' onChange={(e) =>{this.onDeliverRadioChange(e)}}>
-                  {deliverNode}
-                </CheckboxGroup>
+              :
+              <View className='uploadDetail'>
+                <View className='topItem'>
+                  <Text className='itemTitle'>标题：</Text>
+                  <Input
+                    className='itemInput'
+                    type='text'
+                    onInput={(e) => {
+                      this.inputTitleChange(e);
+                    }}
+                  />
+                </View>
+                <View className='topItem'>
+                  <Text className='itemTitle'>新旧程度：</Text>
+                  <RadioGroup className='itemRight' onChange={(e) =>{this.onDegreeRadioChange(e)}}>
+                    {degreeNode}
+                  </RadioGroup>
+                </View>
+                <View className='topItem'>
+                  <Text className='itemTitle'>送货方式（可多选）：</Text>
+                  <Checkbox className='topRadio' key={'自提'} value={0} checked={true}>自提</Checkbox>
+                  <CheckboxGroup className='itemRight' onChange={(e) =>{this.onDeliverRadioChange(e)}}>
+                    {deliverNode}
+                  </CheckboxGroup>
+                </View>
+                <View className='topItem'>
+                  <Text className='itemTitle'>地址：</Text>
+                  <Input
+                    className='itemInput'
+                    type='text'
+                    onInput={(e) => {
+                      this.inputAddressChange(e);
+                    }}
+                  />
+                </View>
+                <View className='topItem'>
+                  <Text className='itemTitle'>价格：</Text>
+                  <Input
+                    className='itemInput'
+                    type='text'
+                    onInput={(e) => {
+                      this.inputPriceChange(e);
+                    }}
+                  />
+                  （元）
+                </View>
+                <View className='topItem'>
+                  <Text className='itemTitle'>原价：</Text>
+                  <Input
+                    className='itemInput'
+                    type='text'
+                    onInput={(e) => {
+                      this.inputOldPriceChange(e);
+                    }}
+                  />
+                  （元）
+                </View>
+                <View className='topItem'>
+                  <Text className='itemTitle'>联系方式（微信号）：</Text>
+                  <Input
+                    className='itemInput'
+                    type='text'
+                    onInput={(e) => {
+                      this.inputContactChange(e);
+                    }}
+                  />
+                </View>
+                <View className='topItem'>
+                  <Text className='itemTitle'>品牌：</Text>
+                  <Input
+                    className='itemInput'
+                    type='text'
+                    onInput={(e) => {
+                      this.inputBrandChange(e);
+                    }}
+                  />
+                </View>
+                <View className='topItem'>
+                  <Text className='itemTitle'>商品描述：</Text>
+                  <Textarea
+                    className='itemTextarea'
+                    type='text'
+                    onInput={(e) => {
+                      this.inputDescriptionChange(e);
+                    }}
+                  />
+                </View>
               </View>
-              <View className='topItem'>
-                <Text className='itemTitle'>地址：</Text>
-                <Input
-                  className='itemInput'
-                  type='text'
-                  onInput={(e) => {
-                    this.inputAddressChange(e);
-                  }}
-                />
-              </View>
-              <View className='topItem'>
-                <Text className='itemTitle'>价格：</Text>
-                <Input
-                  className='itemInput'
-                  type='text'
-                  onInput={(e) => {
-                    this.inputPriceChange(e);
-                  }}
-                />
-                （元）
-              </View>
-              <View className='topItem'>
-                <Text className='itemTitle'>原价：</Text>
-                <Input
-                  className='itemInput'
-                  type='text'
-                  onInput={(e) => {
-                    this.inputOldPriceChange(e);
-                  }}
-                />
-                （元）
-              </View>
-              <View className='topItem'>
-                <Text className='itemTitle'>联系方式（微信号）：</Text>
-                <Input
-                  className='itemInput'
-                  type='text'
-                  onInput={(e) => {
-                    this.inputContactChange(e);
-                  }}
-                />
-              </View>
-              <View className='topItem'>
-                <Text className='itemTitle'>品牌：</Text>
-                <Input
-                  className='itemInput'
-                  type='text'
-                  onInput={(e) => {
-                    this.inputBrandChange(e);
-                  }}
-                />
-              </View>
-              <View className='topItem'>
-                <Text className='itemTitle'>商品描述：</Text>
-                <Textarea
-                  className='itemTextarea'
-                  type='text'
-                  onInput={(e) => {
-                    this.inputDescriptionChange(e);
-                  }}
-                />
-              </View>
+              
+            }
+          </View>
+          <View
+            className='uploadBox'
+            onClick = {(e) => {
+                this.onUpload(e);
+              }}>
+            <View className='uploadLabel'>
+              <Text >上传图片（最多四张）</Text>
+            </View>
+            <View  className='imgBox'>
+              <Image src={imgUrl}  className='uploadImg'  mode='aspectFit'/>
+              
             </View>
             
-          }
-        </View>
-        <View
-          className='uploadBox'
-          onClick = {(e) => {
-              this.onUpload(e);
-            }}>
-          <View className='uploadLabel'>
-            <Text >上传图片（最多四张）</Text>
           </View>
-          <View  className='imgBox'>
-            <Image src={imgUrl}  className='uploadImg'  mode='aspectFit'/>
-            
+          <View className='uploadedBox'>
+              <View className='uploadedLabel'>
+                <Text >上传结果:</Text>
+              </View>
+              <View  className='imgList'>
+                {uploadedNode}
+              </View>
+          </View>
+          <View className='publishBox' onClick = {this.publish}>
+              <Text className='homeButton' >发布</Text>
           </View>
           
+          <TapCom ></TapCom>
+          
         </View>
-        <View className='uploadedBox'>
-            <View className='uploadedLabel'>
-              <Text >上传结果:</Text>
-            </View>
-            <View  className='imgList'>
-              {uploadedNode}
-            </View>
-        </View>
-        <View className='publishBox' onClick = {this.publish}>
-            <Text className='homeButton' >发布</Text>
-        </View>
-        
-        <TapCom ></TapCom>
-        
+        }
       </View>
+      
     )
   }
 }
