@@ -462,10 +462,46 @@ export default class Index extends Component {
 
   }
   clearData = () =>{
+    let degreeData = [
+      {
+        label:'未拆封',
+        value:0
+      },
+      {
+        label:'九成新',
+        value:1
+      },
+      {
+        label:'八成新',
+        value:2
+      },
+      {
+        label:'七成新',
+        value:3
+      },
+      {
+        label:'六成新',
+        value:4
+      },
+      {
+        label:'五成新',
+        value:5
+      },
+      {
+        label:'三成新',
+        value:6
+      },
+    ]
+
+    let degreeList = Array.isArray(degreeData) && degreeData.map( (v,i) =>{
+      v.checked = false
+      return v
+    })
     this.setState({
       title:'',
       radioValue:'',
       radioItem:{},
+      degreeList,
       degreeItem:{},
       deliverItem:[0],
       address:'',
@@ -476,6 +512,7 @@ export default class Index extends Component {
       description:'',
       uploadedList:[],
       imgUrlList:[],
+      imgUrl:''
     })
     this.props.changePage({isPublished:false})
 

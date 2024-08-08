@@ -174,6 +174,7 @@ export default class Index extends Component {
       const productProps = {
         ...v,
         imgUrl,
+        type:1
       }
       let res = (<ProductCom  key={'product' + i} props={productProps}></ProductCom>)
       return res                             

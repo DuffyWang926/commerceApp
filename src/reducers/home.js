@@ -10,14 +10,14 @@ export default function home (state = INITIAL_STATE, action) {
   if(action.type ==  "LOGIN"){
     const { data = {} } = action.payload
     const { userInfo = {} } = data
-    const { id = '' } = userInfo
+    const { userId = '' } = userInfo
     Taro.showToast({
       title:'登录成功',
     })
     return {
       ...state,
       userInfo,
-      userId:id
+      userId:userId
     }
 
   }else if( action.type ==  "POSTUSERINFO" ){

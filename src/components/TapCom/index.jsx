@@ -7,6 +7,12 @@ import {
   changeHomeData
 } from "../../actions/home";
 import { connect } from "../../utils/connect";
+const homeImg = require("../../assets/icon/home.svg")
+const homeImg2 = require("../../assets/icon/home2.svg")
+const addImg = require("../../assets/icon/add.svg")
+const portraitImg = require("../../assets/icon/portrait.svg")
+const portraitImg2 = require("../../assets/icon/portrait2.svg")
+
 const mapStateToProps = (state)=>{
   const { home } = state
   const {  tapCurrent } = home
@@ -59,11 +65,37 @@ export default class TapCom extends Component{
   const tapListNode = Array.isArray(tapList) && tapList.map((v,i) =>{
     const { title } = v
     let style = "tapItem"
+    let imgSrc = ''
+    let imgStyle = 'tapImg'
     if(v.type == tapCurrent){
       style = "tapItem tapCurrent"
+      if(i == 0){
+        imgSrc = homeImg2
+      }else if( i ==2){
+        imgSrc = portraitImg2
+      }
+    }else{
+      if(i == 0){
+        imgSrc = homeImg
+      }else if( i ==2){
+        imgSrc = portraitImg
+      }
+    }
+    if(i == 1){
+      imgSrc = addImg
+      imgStyle = 'addImg'
+      style = "tapItem tapMid"
     }
     let res = (
-      <View className={style} key={title} onClick={() =>{ this.onTapClick(v)}}>{title}</View>
+      <View className={style} key={title} onClick={() =>{ this.onTapClick(v)}}>
+        <View className={imgStyle}>
+          <Image
+            src={imgSrc}
+            
+            ></Image>
+        </View>
+        <View className='tapTxt'>{title}</View>
+      </View>
     )
     return res
   })
@@ -71,6 +103,7 @@ export default class TapCom extends Component{
   return (
     <View className="tapCom" >
       {tapListNode}
+      
     </View>
   );
 

@@ -17,7 +17,7 @@ export const getProducts = (payload) => {
     const { userId, isRefresh } = payload
     // delete payload.isRefresh
       let res = await api.post('/productlist',payload)
-      debugger
+      
       if(userId){
         dispatch({
           type: 'GetUSERPRODUCTS',
@@ -38,11 +38,11 @@ export const deleteProducts = (payload) => {
   return async dispatch => {
     
     let res = await  api.post('/deleteproducts',payload)
-    debugger
+    
     if(res){
       const { userId, page, pageSize, isRefresh } = payload
       let response = await api.post('/productlist',{userId, page:1, pageSize,})
-      debugger
+      
       if(userId){
         dispatch({
           type: 'GetUSERPRODUCTS',

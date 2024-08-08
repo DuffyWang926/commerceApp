@@ -1,5 +1,5 @@
 export default {
-  navigationBarTitleText: '梦都二手电商',
+  navigationBarTitleText: '梦都二手闲置',
   enablePullDownRefresh: true,
   "usingComponents": {
     

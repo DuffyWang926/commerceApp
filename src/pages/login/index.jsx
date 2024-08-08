@@ -106,26 +106,14 @@ export default class Index extends Component {
 
   render () {
 
-    // let appid = 'wxe52a97ff5cbcfc9a'
-    // let redirectUrl = 'https://www.mengshikejiwang.top/#/pages/mine/index'
-    // let encodeUrl = encodeURIComponent(redirectUrl)
-    // let url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appid}&redirect_uri=${encodeUrl}&response_type=code&scope=snsapi_base&state=STATE#wechat_redirect`
-
-    // const { oldUrl = '/pages/index/index', upCode } = this.state
     const { oldUrl = '/pages/mine/index', upCode } = this.state
     let redirectUrl = 'https://www.mengshikejiwang.top/#' + oldUrl + '?upCode=' + upCode
     console.log('redirectUrl', redirectUrl)
     let REDIRECT_URI = encodeURIComponent(redirectUrl)
     console.log('REDIRECT_URI', REDIRECT_URI)
-    // let url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe52a97ff5cbcfc9a&redirect_uri=${REDIRECT_URI}&response_type=code&scope=snsapi_base&state=123#wechat_redirect`
-    // let url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe52a97ff5cbcfc9a&redirect_uri=https%3A%2F%2Fwww.mengshikejiwang.top%2F%23%2Fpages%2Fmine%2Findex&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect'
-    let url = `https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxe52a97ff5cbcfc9a&redirect_uri=${REDIRECT_URI}&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect`
     
     return (
       <View className='login'>
-        {/* <View className='loginTop'>
-          登录
-        </View> */}
         <View className='loginMid'>
           <Image className='midImg' src={logoImg} ></Image>
           <View className='midTitle'>
@@ -139,12 +127,11 @@ export default class Index extends Component {
           <Text>推荐码:</Text>
           <View >
             <Input onInput={this.onInputChange} value={upCode} className="recommendInput"></Input>
-            {/* <span className='recommendTip'>填写推荐码(推荐人的ID)会有更多佣金</span> */}
+            <span className='recommendTip'>填写推荐码(推荐人的ID)会有更多积分</span>
           </View>
         </View>
         <View className='loginBtn' onClick={this.onLogin}>
-          {/* <a href={url} className='loginText'>微信登录</a> */}
-          <Text>登录</Text>
+          <Text>登录/注册</Text>
         </View>
       </View>
     )

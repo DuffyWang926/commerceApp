@@ -185,11 +185,11 @@ export default class Index extends Component {
     })
     let degreeVal = ''
     Array.isArray(degreeData) && degreeData.map( (v,i) =>{
-      if(v.value = degree){
+      if(v.value == degree){
         degreeVal =  v.label
       }
     })
-
+   
     let deliverVal = ''
 
     Array.isArray(deliverData) && deliverData.map( (v,i) =>{
@@ -238,9 +238,11 @@ export default class Index extends Component {
           </View>
           
         </View>
+        { description && 
         <View className="productContent" >
           <View className="description" > 商品详情：{description}</View>
         </View>
+        }
         <View className="productFoot" >
           <View className="report" onClick={this.onReport} >举报</View>
           <View className="contact" onClick={this.onContact} >微信号

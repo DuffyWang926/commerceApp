@@ -6,7 +6,6 @@ export default {
     'pages/login/index',
     'pages/mine/index',
     'pages/group/index',
-    'pages/groupCode/index',
     'pages/upload/index',
     'pages/shareGroups/index',
   ],
@@ -16,6 +15,4 @@ export default {
     navigationBarTitleText: 'WeChat',
     navigationBarTextStyle: 'black'
   },
-   // 启用全局下拉刷新
-   enablePullDownRefresh: true
 }

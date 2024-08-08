@@ -17,11 +17,12 @@
     }
     .productDetail{
         box-sizing: border-box;
+        font-size: 22px;
         .detailTop{
             background: #fff;
-            padding:10px;
+            padding:20px;
             border-radius: 10px;
-            margin:20px 20px 0 20px ;
+            margin:20px 0 ;
             
             .title{
                 font-size: 28px;
@@ -35,7 +36,6 @@
             }
             .priceBox{
                 display: flex;
-                justify-content: space-between;
                 font-size: 18px;
                 color:#333;
                 padding:10px 0 0 0;
@@ -45,6 +45,7 @@
                     
                 }
                 .oldPriceBox{
+                    padding:0 0 0 20px;
                     .oldPrice{
                         text-decoration: line-through;
                         color:#c72323;
@@ -59,16 +60,23 @@
         }
         .detailMid{
             background: #fff;
-            padding:10px;
+            padding:20px;
             border-radius: 10px;
-            margin:20px 20px 0 20px ;
+            margin:20px 0;
+            .location{
+                padding:10px 0 0 0;
+            }
+
+            .deliver{
+                padding:10px 0 0 0;
+            }
         }
     }
     .productContent{
         background: #fff;
-        padding:10px;
+        padding:20px;
         border-radius: 10px;
-        margin:20px 20px 0 20px ;
+        margin:20px 0;
         min-height: 200px;
     }
         
@@ -86,12 +94,12 @@
         .report{
             border-radius: 10px;
             padding:10px;
-            background:orange;
+            background:#f8bc1c;
         }
         .contact{
             border-radius: 10px;
             padding:10px;
-            background:orange;
+            background:#f8bc1c;
         }
         .reportDetail{
             position:absolute;

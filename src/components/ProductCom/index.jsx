@@ -22,7 +22,7 @@ const ProductCom = ({props}) => {
        src={imgUrl}
        key={imgUrl}
        className={comStyle}
-       mode='aspectFit'
+       mode='widthFix'
       ></Image>
       <View className="detail" >
         <View className="title" >{title}</View>
