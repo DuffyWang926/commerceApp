@@ -123,11 +123,21 @@ export default class Index extends Component {
         url = v.url
       }
     })
-    if(url){
-      Taro.navigateTo({
-        url
-      });
-    }
+    // if(url){
+    //   Taro.navigateTo({
+    //     url
+    //   });
+    // }
+    let pages = getCurrentPages();
+let currentPage = pages[pages.length - 1]; // 当前页面
+let root = currentPage.__route__; // 分包根路径
+console.log('pages',pages)
+console.log('currentPage',currentPage)
+console.log('root',root)
+    Taro.navigateTo({
+      url:'/module/cat/pages/index'
+    });
+    
 
   }
   onBannerChange = (e) => {

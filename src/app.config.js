@@ -9,6 +9,14 @@ export default {
     'pages/upload/index',
     'pages/shareGroups/index',
   ],
+  "subPackages": [
+    {
+      "root": "module",
+      "pages": [
+        "cat/pages/index",
+      ],
+    }
+  ],
   window: {
     backgroundTextStyle: 'light',
     navigationBarBackgroundColor: '#fff',
