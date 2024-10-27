@@ -103,7 +103,6 @@ export default class TapCom extends Component{
   return (
     <View className="tapCom" >
       {tapListNode}
-      
     </View>
   );
 

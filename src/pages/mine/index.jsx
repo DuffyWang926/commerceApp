@@ -1,6 +1,6 @@
 import { Component } from 'react'
 import Taro, { getCurrentInstance } from '@tarojs/taro'
-import { View, Text, Swiper, SwiperItem, Image } from '@tarojs/components'
+import { View, Text, AdCustom , SwiperItem, Image } from '@tarojs/components'
 import './index.scss'
 import { connect } from "../../utils/connect";
 import TapCom from "../../components/TapCom";
@@ -10,14 +10,15 @@ import {
 
 } from "../../actions/home";
 
-
 const portraitImg = require("../../assets/portrait.svg")
 const clientImg = require("../../assets/icon/clientService.svg")
 import getUrlCode from "../../utils/getUrlCode";
+// let welfareAd = null
+
 const mapStateToProps = (state)=>{
   const { home } = state
   const { userInfo = {},   } = home
-  const { nickName, headUrl, openid, upCode, userId, points } = userInfo
+  const { nickName, headUrl, openid, upCode, userId, points, groupId } = userInfo
   
     return {
       nickName,
@@ -25,7 +26,8 @@ const mapStateToProps = (state)=>{
       openid,
       id:userId,
       upCode,
-      points
+      points,
+      groupId
     }
 
 }
@@ -53,23 +55,49 @@ export default class Index extends Component {
     if(code && !userId){
       props.postLogin({ code, upCode})
     }
+    this.state={
+      welfareAd:null
+
+    }
+
 
   }
 
   componentDidMount(){
+    if(wx.createRewardedVideoAd){
+      let welfareAd = wx.createRewardedVideoAd({ adUnitId: 'adunit-42f84a2e7096666f' })
+      welfareAd.onLoad(() => {
+        console.log('onLoad event emit111')
+      })
+      welfareAd.onError((err) => {
+        console.log('onError event emit', err)
+      })
+      this.setState({
+        welfareAd
+      })
+      
+    }
+    
     this.props.changeHomeData({ tapCurrent:2})
+    
   }
 
   
 
   loginClick = async () =>{
-    wx.login({
-      success: res => {
-          this.props.postLogin({
-            code:res.code,
-          })
-      }
-    });
+    // wx.login({
+    //   success: res => {
+    //       this.props.postLogin({
+    //         code:res.code,
+    //       })
+    //   }
+    // });
+    const { path } = getCurrentInstance()?.router || {};
+    let url = '/pages/login/index?oldUrl=' + path
+    Taro.navigateTo({
+      url
+    })
+
   }
 
   withdraw = () =>{
@@ -107,6 +135,37 @@ export default class Index extends Component {
     })
   }
 
+  onWelfare = () =>{
+    const { welfareAd } = this.state
+    let url = '/module/welfare/index'
+
+    welfareAd.show()
+    .catch(() => {
+        welfareAd.load()
+        .then(() => welfareAd.show())
+        .catch(err => {
+          console.log('onError1 event emit', err)
+          Taro.navigateTo({
+            url
+          })
+        })
+    })
+    welfareAd.onClose(res => {
+        if (res && res.isEnded) {
+          console.log('onError 2')
+          Taro.navigateTo({
+            url
+          })
+        } else {
+          // 播放中途退出，不下发游戏奖励
+          
+        }
+    })
+    
+  }
+
+  
+
   onRecommend = () =>{
     const { path } = getCurrentInstance()?.router || {};
     let url = '/pages/login/index?oldUrl=' + path
@@ -115,17 +174,21 @@ export default class Index extends Component {
     })
   }
 
-  
+  adLoad = e => {
+    console.log('广告加载成功', e);
+  };
 
+  adError = e => {
+    console.error('广告加载失败', e);
+  };
 
-  
-
-  
+  adClose = e => {
+    console.log('广告关闭', e);
+  };
 
   render () {
-    const { nickName, headUrl, upCode, id, points } = this.props
+    const { nickName, headUrl, upCode, id, points, groupId } = this.props
     let portraitImgSrc = headUrl || portraitImg
-    console.log('this.props', this.props)
     return (
       <View className='mine'>
         {/* <View className='mineTop'>
@@ -177,10 +240,24 @@ export default class Index extends Component {
           </View>
         </View>
         <View className='myTools'>
-          <View className='myGoods'>
+          <View className='toolItem'>
             <Text className='homeButton' onClick={this.onMyGoods}>我的商品</Text>
           </View>
+          { groupId && 
+          <View className='toolItem'>
+            <Text className='homeButton' onClick={this.onWelfare}>福利</Text>
+          </View>
+          }
+          
 
+        </View>
+        <View className="ad">
+          <AdCustom 
+            unitId="adunit-5ef97e641064d7eb" 
+            onLoad={this.adLoad} 
+            onError={this.adError} 
+            onClose={this.adClose} 
+          />
         </View>
         {/* <View className='wallet'>
           <View className='walletMoneyBox'>

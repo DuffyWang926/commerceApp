@@ -4,6 +4,7 @@ import product from './product'
 import search from './search'
 import mine from './mine'
 import group from './group'
+import welfare from './welfare'
 
 
 export default combineReducers({
@@ -11,5 +12,6 @@ export default combineReducers({
   search,
   mine,
   group,
-  product
+  product,
+  welfare
 })

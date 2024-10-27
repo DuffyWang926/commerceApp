@@ -3,7 +3,7 @@ import Taro from '@tarojs/taro'
 const INITIAL_STATE = {
   userId:'',
   userInfo:{},
-  tapCurrent:0
+  tapCurrent:0,
 }
 
 export default function home (state = INITIAL_STATE, action) {
@@ -11,9 +11,10 @@ export default function home (state = INITIAL_STATE, action) {
     const { data = {} } = action.payload
     const { userInfo = {} } = data
     const { userId = '' } = userInfo
-    Taro.showToast({
-      title:'登录成功',
-    })
+    let oldUrl = '/pages/mine/index'
+    Taro.navigateTo({
+      url:oldUrl
+    });
     return {
       ...state,
       userInfo,

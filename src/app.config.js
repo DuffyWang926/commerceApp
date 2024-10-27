@@ -7,13 +7,17 @@ export default {
     'pages/mine/index',
     'pages/group/index',
     'pages/upload/index',
-    'pages/shareGroups/index',
   ],
   "subPackages": [
     {
       "root": "module",
       "pages": [
+        "tips/pages/index",
         "cat/pages/index",
+        "shareGroups/pages/index",
+        "welfare/index",
+        "city/index",
+        
       ],
     }
   ],

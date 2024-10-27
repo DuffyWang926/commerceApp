@@ -4,7 +4,7 @@
     .loginTop{
         text-align: center;
         color:#333;
-        font-size: 18px;
+        font-size: 22px;
         font-weight: bold;
     }
     .loginMid{
@@ -15,28 +15,41 @@
             height: 300px;
         }
         .midTitle{
-            font-size: 18px;
+            font-size: 22px;
         }
         .midTip{
             padding: 10px 0 0 0;
-            font-size: 16px;
+            font-size: 18px;
             color:orange;
         }
     }
     .recommend{
         display: flex;
-        font-size: 16px;
+        font-size: 18px;
         justify-content: center;
         align-items: center;
+        padding: 20px 0 0 0;
+        .recommendLabel{
+            width: 200px;
+        }
         .recommendInput{
             border: 1px solid #aaa;
             margin:0 20px;
         }
         .recommendTip{
             text-align: center;
-            font-size: 14px;
+            font-size: 18px;
             color:#999;
         }
+    }
+    .policy{
+        font-size: 18px;
+        text-align: center;
+        padding:20px;
+        .policyTxt{
+            color:#4f42db;
+        }
+
     }
     .loginBtn{
         margin: 40px auto;

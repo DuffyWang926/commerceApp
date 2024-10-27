@@ -1,0 +1,55 @@
+.welfare{
+    width: 100%;
+    
+    .welfareImg{
+       width:100%;
+    }
+    .conditions{
+        padding: 20px;
+        .conditionsTitle{
+            text-align: center;
+            font-weight: bolder;
+            font-size: 28px;
+            color:#cb2020;
+        }
+        .tip{
+            font-size: 22px;
+            text-align: center;
+        }
+        .tipEnd{
+            font-size: 22px;
+            text-align: right;
+        }
+    }
+    
+    .attend{
+        padding: 20px;
+        display: flex;
+        justify-content: center;
+        
+    }
+    .list{
+        padding: 20px;
+        .listItem{
+            padding:10px;
+            display: flex;
+            box-sizing: border-box;
+            justify-content: space-around;
+            .portrait{
+                width:100px;
+                height:100px;
+                .portraitImg{
+                    width:100px;
+                    height:100px;
+                }
+            }
+            .listTxt{
+                display: flex;
+                align-items: center;
+
+            }
+        }
+    }
+    
+}
+

@@ -18,17 +18,29 @@
         height: 100%;
         padding:10px 10px 300px 10px;
         box-sizing: border-box;
-        font-size: 18px;
+        font-size: 30px;
         .uploadTop{
             width: 100%;
             .topItem{
                 display: flex;
                 align-items: center;
                 padding:10px 0 0 10px;
-                font-size: 18px;
+                font-size: 30px;
                 .itemTitle{
                     width:200px;
                     
+                }
+                .itemEnd{
+                    flex: 1;
+                    display: flex;
+                    padding: 0 20px;
+                    .endBtn{
+                        margin:0 0 0 20px;
+                    }
+
+                }
+                .endBtn{
+                    margin:0 0 0 20px;
                 }
                 .itemRight{
                     flex: 1;

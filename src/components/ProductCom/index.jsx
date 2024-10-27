@@ -4,7 +4,6 @@ import "./index.scss";
 
 const ProductCom = ({props}) => {
   const { id, imgUrl, title, price, oldPrice, location, type, city} = props
-  console.log('props',props)
   const onImgClick = () =>{
     Taro.navigateTo({
       url:`/pages/product/index?id=${id}`

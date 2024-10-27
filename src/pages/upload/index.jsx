@@ -7,6 +7,8 @@ import { connect } from "../../utils/connect";
 import communityList from "../../constant/comunity";
 import getUrlCode from "../../utils/getUrlCode";
 import TapCom from "../../components/TapCom";
+import CityCom from "../../components/CityCom";
+
 import {
   publishProduct,
   changePage
@@ -128,6 +130,10 @@ export default class Index extends Component {
       description:'',
       uploadedList:[],
       imgUrlList:[],
+      isCity:false,
+      province:{name:''},
+      city:{name:''},
+      region:{name:''},
     }
 
     
@@ -397,6 +403,9 @@ export default class Index extends Component {
       description,
       imgUrlList,
       type,
+      province,
+      city,
+      region
      } = this.state
      const { userId } = this.props
      let deliver = deliverItem.join(',')
@@ -422,7 +431,10 @@ export default class Index extends Component {
       isWrong = true
      }else if(userId && !type){
       modalTxt = '请登录后发布'
+     }else if(province && !province.name){
+      modalTxt = '请登录后发布'
      }
+     
      if(isWrong){
       Taro.showModal({
         title: '提示',
@@ -452,6 +464,9 @@ export default class Index extends Component {
           description,
           imgUrlList,
           publisher:userId,
+          province,
+          city,
+          region
         }
        )
 
@@ -524,11 +539,39 @@ export default class Index extends Component {
     this.clearData()
   }
 
+  chooseCity = () =>{
+    this.setState({
+      isCity:true
+    })
+  }
+
+  getCity = (obj) =>{
+    const {
+      province,
+      city,
+      region
+
+    } = obj
+    this.setState({
+      province,
+      city,
+      region,
+      isCity:false,
+    })
+    console.log('get', obj)
+    
+  }
+
+  
+
 
   render () {
-    const { type, radioList, imgUrl, degreeList, deliverList, uploadedList } = this.state
+    const { type, radioList, imgUrl, degreeList, deliverList, uploadedList, isCity,province,
+      city,
+      region,
+     } = this.state
     const { isPublished } = this.props
-    console.log('uploadedList', uploadedList)
+    
 
     const radioNode = Array.isArray(radioList) && radioList.map( (v,i) =>{
       let res = (
@@ -557,6 +600,10 @@ export default class Index extends Component {
       )
       return res
     })
+
+    const cityProps={
+      confirmCity:this.getCity
+    }
 
 
 
@@ -615,6 +662,15 @@ export default class Index extends Component {
                     {deliverNode}
                   </CheckboxGroup>
                 </View>
+                <View className='topItem'>
+                  <Text className='itemTitle'>城市：</Text>
+                  {/* <Text className='itemEnd'> */}
+                    { isCity ? <CityCom {...cityProps}></CityCom> : <Text>{province.name}{city.name}{region.name}</Text>}
+                    <Text className='homeButton endBtn' onClick = {this.chooseCity}>选择</Text>
+                  {/* </Text> */}
+                  
+                </View>
+                
                 <View className='topItem'>
                   <Text className='itemTitle'>地址：</Text>
                   <Input
@@ -716,3 +772,4 @@ export default class Index extends Component {
     )
   }
 }
+

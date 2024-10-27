@@ -15,14 +15,15 @@ import {
 
 import TapCom from "../../components/TapCom";
 import TabsCom from "../../components/TabsCom";
-
 import ProductCom from "../../components/ProductCom";
+import CityValCom from "../../components/CityValCom";
 const bannerImgA = require("../../assets/banner/banner1.jpg")
 
 
 const mapStateToProps = (state)=>{
-  const { home, product } = state
+  const { home, product, search } = state
   const { itemList, tapCurrent } = home
+  const { city } = search
   const { type, page, pageSize, products, leftProducts,
     rightProducts,
     hasMore,
@@ -37,6 +38,7 @@ const mapStateToProps = (state)=>{
       leftProducts,
       rightProducts,
       hasMore,
+      city
       
     }
 
@@ -67,11 +69,12 @@ export default class Index extends Component {
     super(props);
     const bannerList = [
       {
-        url:'/pages/shareGroups/index',
+        url:'/module/shareGroups/pages/index',
         imgSrc:bannerImgA
       },
       
     ]
+    
 
     this.state={
       bannerList,
@@ -88,6 +91,19 @@ export default class Index extends Component {
    
     
   }
+
+  onShareAppMessage(res) {
+    console.log(res);
+    if (res.from === 'menu') {
+      // 来自页面内转发按钮
+      console.log(res.target)
+    }
+    return {
+      title: '梦都二手闲置',
+      path: 'pages/index/index' ,
+    }
+  }
+
 
   onPullDownRefresh = () => {
     console.log('onPullDownRefresh triggered');
@@ -123,20 +139,12 @@ export default class Index extends Component {
         url = v.url
       }
     })
-    // if(url){
-    //   Taro.navigateTo({
-    //     url
-    //   });
-    // }
-    let pages = getCurrentPages();
-let currentPage = pages[pages.length - 1]; // 当前页面
-let root = currentPage.__route__; // 分包根路径
-console.log('pages',pages)
-console.log('currentPage',currentPage)
-console.log('root',root)
-    Taro.navigateTo({
-      url:'/module/cat/pages/index'
-    });
+    if(url){
+      Taro.navigateTo({
+        url
+      });
+    }
+    
     
 
   }
@@ -153,6 +161,14 @@ console.log('root',root)
     })
 
   }
+
+  chooseCity = () =>{
+    let url = '/module/city/index'
+    Taro.navigateTo({
+      url
+    });
+  }
+  
   
 
   
@@ -161,12 +177,13 @@ console.log('root',root)
   
 
   render () {
-    const { bannerList, currentTab } = this.state
+    const { bannerList, currentTab} = this.state
     const { 
       leftProducts,
-      rightProducts, 
+      rightProducts,
+      city
     } = this.props
-    console.log('leftProducts',leftProducts)
+    
     const leftProductsNode = Array.isArray(leftProducts) && leftProducts.map( (v,i) =>{
       const { imgList=[] } = v
       let imgUrl = imgList.length >0 && imgList[0] 
@@ -223,6 +240,9 @@ console.log('root',root)
           autoplay>
           {bannerListCom}
         </Swiper>
+        
+        < CityValCom />
+       
         < TabsCom props={tabsProps}/>
         
         {/* <View className='homeTap'>

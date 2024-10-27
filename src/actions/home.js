@@ -2,11 +2,11 @@
 import api from '../services/api'
 export const postLogin = (payload) => {
   return async dispatch => {
-    
+    const { oldUrl } = payload
     let res = await api.post('/login',payload)
     dispatch({
       type: 'LOGIN',
-      payload: res
+      payload: {...res, oldUrl}
     })
   }
 }
@@ -23,6 +23,13 @@ export const recordTime = (payload) => {
     let res = await api.post('/recordTime',payload)
     
     
+  }
+}
+
+export const changeCity = (payload) => {
+  return {
+    type: 'CHANGECITY',
+    payload
   }
 }
   
