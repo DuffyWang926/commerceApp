@@ -16,14 +16,14 @@ import {
 import TapCom from "../../components/TapCom";
 import TabsCom from "../../components/TabsCom";
 import ProductCom from "../../components/ProductCom";
-import CityValCom from "../../components/CityValCom";
+import SearchCom from "../../components/SearchCom";
+
 const bannerImgA = require("../../assets/banner/banner1.jpg")
 
 
 const mapStateToProps = (state)=>{
-  const { home, product, search } = state
+  const { home, product } = state
   const { itemList, tapCurrent } = home
-  const { city } = search
   const { type, page, pageSize, products, leftProducts,
     rightProducts,
     hasMore,
@@ -38,7 +38,6 @@ const mapStateToProps = (state)=>{
       leftProducts,
       rightProducts,
       hasMore,
-      city
       
     }
 
@@ -161,19 +160,6 @@ export default class Index extends Component {
     })
 
   }
-
-  chooseCity = () =>{
-    let url = '/module/city/index'
-    Taro.navigateTo({
-      url
-    });
-  }
-  
-  
-
-  
-
-
   
 
   render () {
@@ -181,7 +167,6 @@ export default class Index extends Component {
     const { 
       leftProducts,
       rightProducts,
-      city
     } = this.props
     
     const leftProductsNode = Array.isArray(leftProducts) && leftProducts.map( (v,i) =>{
@@ -226,6 +211,10 @@ export default class Index extends Component {
       currentTab,
       changeTab:this.changeTab,
     }
+    let searchProps = {
+      url:'/module/search/index'
+    }
+    
     return (
       <View className='home'>
         <Swiper
@@ -240,8 +229,7 @@ export default class Index extends Component {
           autoplay>
           {bannerListCom}
         </Swiper>
-        
-        < CityValCom />
+        < SearchCom props={searchProps} />
        
         < TabsCom props={tabsProps}/>
         

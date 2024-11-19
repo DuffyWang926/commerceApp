@@ -10,18 +10,11 @@ import {
 import CityCom from "../../components/CityCom";
 
 const mapStateToProps = (state)=>{
-    const { home, welfare } = state
-    const { userInfo } = home
-    const { userId, points, nickName, headUrl } = userInfo
-    const { welfareList, isAttend } = welfare
+    const { search } = state
+    const { city } = search
     
       return {
-        userId,
-        points,
-        nickName,
-        headUrl,
-        welfareList,
-        isAttend
+        city,
       }
   
   }
@@ -43,7 +36,7 @@ export default class Index extends Component {
 
 
     this.state={
-        
+      city:'北京市'
       
       
     }
@@ -55,7 +48,7 @@ export default class Index extends Component {
     const {
       city,
     } = obj
-    this.props.changeCity({city})
+    this.setState({city})
     
     console.log('get', obj)
     
@@ -67,6 +60,7 @@ export default class Index extends Component {
  
 
   render () {
+    const { city } = this.state
     
     const cityProps={
       confirmCity:this.getCity
@@ -77,6 +71,7 @@ export default class Index extends Component {
         <View className='city'>
           <View className='topItem'>
                   <Text className='itemTitle'>城市：</Text>
+                  <Text className='itemTitle'>{city}</Text>
                   {/* <Text className='itemEnd'> */}
                      <CityCom {...cityProps}></CityCom>
                     <Text className='homeButton endBtn' onClick = {this.chooseCity}>选择</Text>

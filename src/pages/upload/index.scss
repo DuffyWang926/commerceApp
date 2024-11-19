@@ -60,15 +60,14 @@
                 }
             }
         }
-        .uploadBox{
+        .uploadCom{
             padding:20px 10px 0;
             box-sizing: border-box;
-            display:flex;
-           
             .imgBox{
                 border:1px solid #333;
                 width: 200px;
                 height: 200px;
+                margin:20px;
                 .uploadImg{
                     width: 200px;
                     height: 200px;
@@ -107,8 +106,17 @@
             bottom:200px;
             background: #fff;
             width: 100%;
-            height: 50px;
+            height: 150px;
             text-align: center;
+            
+            .publishTip{
+                color:red;
+                font-size: 20px;
+                padding:20px 10px 50px 10px;
+                
+
+                
+            }
         }
         
     }

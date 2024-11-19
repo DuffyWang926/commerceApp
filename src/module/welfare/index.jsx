@@ -13,7 +13,7 @@ const img1 = require("./1.png")
 const mapStateToProps = (state)=>{
     const { home, welfare } = state
     const { userInfo } = home
-    const { userId, points, nickName, headUrl } = userInfo
+    const { userId, points, nickName, headUrl, groupId } = userInfo
     const { welfareList, isAttend } = welfare
     
       return {
@@ -22,7 +22,8 @@ const mapStateToProps = (state)=>{
         nickName,
         headUrl,
         welfareList,
-        isAttend
+        groupId,
+        isAttend,
       }
   
   }
@@ -45,32 +46,33 @@ export default class Index extends Component {
     super()
 
     const today = new Date();
-    const dayOfWeek = today.getDay(); 
+    const dayOfWeek = today.getDay();
+
     let nextFriday = new Date(today);
-    nextFriday.setDate(today.getDate() + (5 - dayOfWeek + 7) % 7);
+    nextFriday.setDate(today.getDate() + (5 - dayOfWeek) );
     nextFriday.setHours(20, 0, 0, 0);
     let nextSaturday = new Date(today);
-    nextSaturday.setDate(today.getDate() + (6 - dayOfWeek + 7) % 7);
+    nextSaturday.setDate(today.getDate() + (6 - dayOfWeek));
     nextSaturday.setHours(20, 0, 0, 0); 
-    const lastFriday = new Date(today);
-    const daysToLastFriday = (today.getDay() + 2) % 7;
-    lastFriday.setDate(lastFriday.getDate() - daysToLastFriday);
-    lastFriday.setHours(20, 0, 0, 0); // 设置时间为20:00:00
-    console.log('lastFriday',lastFriday.toString())
-    const lastSaturday = new Date(today);
-    const daysToLastSaturday = (today.getDay() + 1) % 7;
-    lastSaturday.setDate(lastSaturday.getDate() - daysToLastSaturday);
-    lastSaturday.setHours(20, 0, 0, 0); // 设置时间为20:00:00
-    console.log('lastSaturday',lastSaturday.toString())
+    
     let startDay = ''
     let endDay = ''
-
-    if(dayOfWeek > 6){
+    const thisSaturday = new Date(today);
+    thisSaturday.setDate(thisSaturday.getDate() + 1);
+    thisSaturday.setHours(20, 0, 0, 0); 
+    const thisFriday = new Date(today);
+    thisFriday.setDate(thisFriday.getDate() - 1);
+    thisFriday.setHours(20, 0, 0, 0); 
+    today.setHours(20, 0, 0, 0); 
+    if(dayOfWeek == 5){
+      startDay = today
+      endDay = thisSaturday
+    }else if(dayOfWeek == 6){
+      startDay = thisFriday
+      endDay = today
+    }else{
       startDay = nextFriday
       endDay = nextSaturday
-    }else{
-      startDay = lastFriday
-      endDay = lastSaturday
     }
     function formatDate(date) {
         const year = date.getFullYear();
@@ -83,8 +85,8 @@ export default class Index extends Component {
         startDay:formatDate(startDay),
         endDay:formatDate(endDay),
         endCashDay:formatDate(nextFriday),
-        startDayTime:startDay,
-        endDayTime:endDay,
+        startDayTime:startDay.getTime(),
+        endDayTime:endDay.getTime(),
       
       
     }
@@ -96,7 +98,7 @@ export default class Index extends Component {
   
   onAttend = () =>{
     const { userId, points, nickName,
-      headUrl, } = this.props
+      headUrl, groupId } = this.props
     const { startDayTime, endDayTime} = this.state
     let date = new Date().getTime()
     if( date >= startDayTime && date <=  endDayTime){
@@ -105,7 +107,8 @@ export default class Index extends Component {
           points,
           nickName,
           headUrl,
-          date
+          date,
+          groupId,
       })
 
     }else{
@@ -150,7 +153,6 @@ export default class Index extends Component {
     let welfareListNode = Array.isArray(welfareList) && welfareList.map( (v,i) =>{
       let res = <View className='listItem' key={i+'list'}>
         <View className='portrait'>
-          <Image className='welfareImg' src={v.headUrl} mode="aspectFit" ></Image>
         </View>
         <View className='listTxt'>{v.nickName}</View>
         <View className='listTxt'>{v.userId}</View>
@@ -179,7 +181,6 @@ export default class Index extends Component {
                 <Text >抽奖</Text>
                 :
                 <Text className='homeButton' onClick={this.onAttend}>抽奖</Text>
-
                 }
             </View>
            

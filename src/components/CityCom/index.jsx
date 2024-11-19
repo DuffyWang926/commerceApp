@@ -96,6 +96,10 @@ export default class CityCom extends Component{
             }
           }
           if(name.includes('市')){
+            nextCity = {
+              code:secCode,
+              name:name
+            }
             cities.push({
               code:secCode,
               name:name

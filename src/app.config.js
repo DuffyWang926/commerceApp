@@ -16,7 +16,7 @@ export default {
         "cat/pages/index",
         "shareGroups/pages/index",
         "welfare/index",
-        "city/index",
+        "search/index",
         
       ],
     }

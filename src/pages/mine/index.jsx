@@ -138,6 +138,9 @@ export default class Index extends Component {
   onWelfare = () =>{
     const { welfareAd } = this.state
     let url = '/module/welfare/index'
+    Taro.navigateTo({
+      url
+    })
 
     welfareAd.show()
     .catch(() => {
@@ -203,6 +206,7 @@ export default class Index extends Component {
               } */}
               { !id && <View onClick={() =>{ this.loginClick()}} className='homeButton' >点击登录</View>
               }
+              <View>昵称:{nickName}</View>
               <View>ID:{id}</View>
               <View onClick={this.onRecommend}>推荐人:{upCode}</View>
             </View>

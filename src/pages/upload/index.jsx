@@ -429,9 +429,10 @@ export default class Index extends Component {
      }else if(degreeItem && !degreeItem){
       modalTxt = '请填写新旧程度'
       isWrong = true
+     }else if(!province.name){
+      modalTxt = '请选择城市'
+      isWrong = true
      }else if(userId && !type){
-      modalTxt = '请登录后发布'
-     }else if(province && !province.name){
       modalTxt = '请登录后发布'
      }
      
@@ -664,10 +665,9 @@ export default class Index extends Component {
                 </View>
                 <View className='topItem'>
                   <Text className='itemTitle'>城市：</Text>
-                  {/* <Text className='itemEnd'> */}
-                    { isCity ? <CityCom {...cityProps}></CityCom> : <Text>{province.name}{city.name}{region.name}</Text>}
-                    <Text className='homeButton endBtn' onClick = {this.chooseCity}>选择</Text>
-                  {/* </Text> */}
+                  { isCity ? <CityCom {...cityProps}></CityCom> : <Text>{province.name}{city.name}{region.name}</Text>}
+                  { !isCity && <Text className='homeButton endBtn' onClick = {this.chooseCity}>选择</Text>}
+                    
                   
                 </View>
                 
@@ -738,12 +738,12 @@ export default class Index extends Component {
             }
           </View>
           <View
-            className='uploadBox'
+            className='uploadCom'
             onClick = {(e) => {
                 this.onUpload(e);
               }}>
             <View className='uploadLabel'>
-              <Text >上传图片（最多四张）</Text>
+              <Text >上传图片（最多四张，推荐尺寸200×200）</Text>
             </View>
             <View  className='imgBox'>
               <Image src={imgUrl}  className='uploadImg'  mode='aspectFit'/>
@@ -760,6 +760,7 @@ export default class Index extends Component {
               </View>
           </View>
           <View className='publishBox' onClick = {this.publish}>
+              <View className='publishTip' >注意：为了给大家更好的购物体验，180天内没有更新信息的商品将会被删除。</View>
               <Text className='homeButton' >发布</Text>
           </View>
           

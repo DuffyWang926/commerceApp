@@ -1,7 +1,7 @@
 import { Component } from 'react'
 import Taro, { getCurrentInstance } from '@tarojs/taro'
 
-import { View, Input, Image, Text, RadioGroup, Radio } from '@tarojs/components'
+import { View, Input, Image, Text, RadioGroup, Radio, Button } from '@tarojs/components'
 import './index.scss'
 import { connect } from "../../utils/connect";
 import {
@@ -34,7 +34,9 @@ export default class Index extends Component {
       oldUrl,
       upCode:'',
       radioChecked:false,
-      groupId:''
+      groupId:'',
+      userName:'',
+      avatarUrl: ''
     }
   }
 
@@ -77,16 +79,15 @@ export default class Index extends Component {
 
   
   onLogin= () =>{
-    const { upCode, radioChecked , groupId, oldUrl } = this.state
-    console.log('groupId',groupId)
+    const { upCode, radioChecked , groupId, oldUrl, userName } = this.state
     let that = this
-    let groupFlag = true
+    let nextFlag = true
     if(groupId){
       if(groupId == '10002' ){
-        groupFlag = true
+        nextFlag = true
 
       }else{
-        groupFlag = false
+        nextFlag = false
         Taro.showModal({
           title: '提示',
           content: '请填写正确的群Id或者清空。',
@@ -106,7 +107,8 @@ export default class Index extends Component {
       }
         
     }
-    if(groupFlag){
+
+    if(nextFlag){
       if(radioChecked ){
         wx.getUserProfile({
           desc: '用于完善会员资料', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
@@ -129,7 +131,7 @@ export default class Index extends Component {
                       avatarUrl,
                       city,
                       gender,
-                      nickName,
+                      nickName:userName,
                       province,
                       upCode,
                       groupId,
@@ -176,7 +178,7 @@ export default class Index extends Component {
                             avatarUrl,
                             city,
                             gender,
-                            nickName,
+                            nickName:userName,
                             province,
                             upCode,
                             groupId,
@@ -223,7 +225,37 @@ export default class Index extends Component {
       radioChecked:!radioChecked,
     })
   }
+  getUserInfo = (e) =>{
+    
+    if (e.detail.userInfo) {
+      const userInfo = e.detail.userInfo
+      const userName = userInfo.nickName
+      console.log('用户昵称:', userName)
+    } else {
+      console.log('用户拒绝了授权')
+    }
+  }
+  onChooseAvatar = (e) => {
+    const { avatarUrl } = e.detail
+    if (avatarUrl) {
+      console.log('avatarUrl', avatarUrl)
+      this.setState({
+        avatarUrl: avatarUrl
+      })
+    } else {
+      console.log('用户未选择头像')
+    }
+  }
 
+  handleInput = (e) => {
+    const { value } = e.detail;
+    this.setState({
+      userName: value
+    })
+    
+  }
+  
+  
   
 
   render () {
@@ -243,6 +275,33 @@ export default class Index extends Component {
             让明天的生活更美好！
           </View>
         </View>
+        {/* <View className='recommend' >
+          <Text className='recommendLabel' >头像（非必填）:</Text>
+          <View >
+            <Button
+              className="avatar-wrapper avatar"
+              openType="chooseAvatar"
+              onChooseAvatar={this.onChooseAvatar}
+            >
+              <Image className="avatar" src={this.state.avatarUrl || 'default-avatar-url'} />
+            </Button>
+          </View>
+        </View> */}
+        <View className='recommend' >
+          <Text className='recommendLabel' >昵称（注册必填）:</Text>
+          <View >
+          <Input
+            type="nickname"
+            className="weui-input recommendInput"
+            placeholder="请输入昵称"
+            onInput={(e) => {
+              this.handleInput(e);
+            }}
+          />
+          </View>
+        </View>
+        
+        
         <View className='recommend' >
           <Text className='recommendLabel' >推荐码（非必填）:</Text>
           <View >

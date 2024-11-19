@@ -84,7 +84,8 @@ export default class Index extends Component {
       userProducts,
      } = this.props
      
-    this.props.getProducts({userId, page:userPage, pageSize:userPageSize, isRefresh:true})
+    // this.props.getProducts({userId, page:userPage, pageSize:userPageSize, isRefresh:true,isAll:true})
+    this.props.getProducts({userId, page:userPage, pageSize:userPageSize, isRefresh:true,})
 
   }
   // 底部上拉加载更多数据事件处理函数
