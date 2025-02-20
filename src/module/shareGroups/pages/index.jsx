@@ -6,7 +6,7 @@ import { connect } from "../../../utils/connect";
 import communityList from "../../../constant/comunity";
 import getUrlCode from "../../../utils/getUrlCode";
 const codeA = require("./a.jpg")
-const codeB = require("./b.jpg")
+const codeB = require("./B.jpg")
 const code0 = require("./0.jpg")
 
 
@@ -48,21 +48,29 @@ export default class Index extends Component {
     value: (10000 + index).toString(),
     text: city
     }));
+
+    let rentCities = [
+      '北京', 
+    ];
+
+    let rentList = rentCities.map((city, index) => ({
+      value: (20000 + index).toString(),
+      text: city
+      }));
     
     this.state = {
       radioList:tempList,
       wxList:[
         {
-          name:'a1b1c1527',
+          name:'',
           imgSrc:codeA,
         },
-        {
-          name:'a47124988273',
-          imgSrc:codeB,
-        },
+        
         
       ],
-      isAd:0
+      isAd:0,
+      rentList,
+
     }
     
   }
@@ -116,27 +124,53 @@ export default class Index extends Component {
   }
 
   render () {
-    const { radioList, wxList, type, isAd } = this.state
-    const title = '闲置群'
-    const radioNode = Array.isArray(radioList) && radioList.map( (v,i) =>{
-      let res = (
-        <Text className='itemName' key={v.text} >{v.text}</Text>
-      )
-      return res
-    })
+    const { radioList, wxList, type, isAd, rentList } = this.state
+    let title = ''
+    let radioNode = []
+    let wxListNode = []
 
-    const wxListNode = Array.isArray(wxList) && wxList.map( (v,i) =>{
-      let res = (
-        <View className='listItem' key={i}>
-          <View>wx 号：{v.name}</View>
-          <View>
-            <Image className='listImg' src={v.imgSrc} mode="aspectFit" showMenuByLongpress></Image>
+    if(type == 1){
+      title = '租房群'
+      radioNode = Array.isArray(rentList) && rentList.map( (v,i) =>{
+        let res = (
+          <Text className='itemName' key={v.text} >{v.text}</Text>
+        )
+        return res
+      })
+
+      wxListNode = 
+          <View className='listItem' >
+            <View>
+              <Image className='listImg' src={codeB} mode="aspectFit" showMenuByLongpress></Image>
+            </View>
+            <View>（长按即可添加）</View>
           </View>
-          <View>（长按即可添加）</View>
-        </View>
-      )
-      return res
-    })
+        
+
+    }else{
+      title = '闲置群'
+      radioNode = Array.isArray(radioList) && radioList.map( (v,i) =>{
+        let res = (
+          <Text className='itemName' key={v.text} >{v.text}</Text>
+        )
+        return res
+      })
+
+      wxListNode = Array.isArray(wxList) && wxList.map( (v,i) =>{
+        let res = (
+          <View className='listItem' key={i}>
+            {/* <View>wx 号：{v.name}</View> */}
+            <View>
+              <Image className='listImg' src={v.imgSrc} mode="aspectFit" showMenuByLongpress></Image>
+            </View>
+            <View>（长按即可添加）</View>
+          </View>
+        )
+        return res
+      })
+    }
+
+    
     
     return (
       <View className='shareGroupsPage'>

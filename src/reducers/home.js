@@ -8,10 +8,9 @@ const INITIAL_STATE = {
 
 export default function home (state = INITIAL_STATE, action) {
   if(action.type ==  "LOGIN"){
-    const { data = {} } = action.payload
+    const { data = {} , oldUrl} = action.payload
     const { userInfo = {} } = data
     const { userId = '' } = userInfo
-    let oldUrl = '/pages/mine/index'
     Taro.navigateTo({
       url:oldUrl
     });

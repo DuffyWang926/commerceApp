@@ -56,6 +56,18 @@ export const deleteProducts = (payload) => {
   }
 }
 
+export const checkProducts = (payload) => {
+  return async dispatch => {
+    
+    await  api.post('/checkProducts',payload)
+    
+    
+    
+      
+  }
+}
+
+
 export const reportProduct = (payload) => {
   return async dispatch => {
     await  api.post('/reportProduct',payload)

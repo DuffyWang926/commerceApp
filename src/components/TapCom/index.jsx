@@ -1,4 +1,4 @@
-import Taro from "@tarojs/taro";
+import Taro from '@tarojs/taro'
 import { View, Image } from "@tarojs/components";
 import { Component } from 'react'
 
@@ -15,9 +15,12 @@ const portraitImg2 = require("../../assets/icon/portrait2.svg")
 
 const mapStateToProps = (state)=>{
   const { home } = state
-  const {  tapCurrent } = home
+  const {  tapCurrent, userInfo = {}, } = home
+  const { groupId } = userInfo
+
     return {
-      tapCurrent
+      tapCurrent,
+      groupId,
     }
 
 }
@@ -31,6 +34,15 @@ const mapDispatchToProps = (dispatch) =>{
 @connect( mapStateToProps , mapDispatchToProps )
 export default class TapCom extends Component{
 
+  constructor(props){
+    super(props)
+    this.state={
+
+    }
+
+
+  }
+
   onTapClick = (val) =>{
     const { url, type } = val
     Taro.redirectTo({
@@ -39,9 +51,13 @@ export default class TapCom extends Component{
     this.props.changeHomeData({ tapCurrent:type})
   }
   
+  
 
   render () {
-    const { tapCurrent  } = this.props || {}
+    const { tapCurrent, groupId  } = this.props || {}
+    const { path  } = this.state
+    
+    console.log('this.groupId', groupId, path)
     const tapList = [
       {
         url:`/pages/index/index`,
@@ -85,6 +101,10 @@ export default class TapCom extends Component{
       imgSrc = addImg
       imgStyle = 'addImg'
       style = "tapItem tapMid"
+      if(!groupId){
+        let url = '/pages/login/index?oldUrl=' + '/pages/upload/index'
+        v.url = url
+      }
     }
     let res = (
       <View className={style} key={title} onClick={() =>{ this.onTapClick(v)}}>

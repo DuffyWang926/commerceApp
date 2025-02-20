@@ -103,19 +103,26 @@
         .publishBox{
             position: fixed;
             left: 0;
-            bottom:200px;
+            bottom:170px;
             background: #fff;
             width: 100%;
-            height: 150px;
+            height: 200px;
             text-align: center;
+            box-sizing: border-box;
             
             .publishTip{
                 color:red;
                 font-size: 20px;
-                padding:20px 10px 50px 10px;
-                
-
-                
+                padding:20px 10px 20px 10px;
+            }
+            .policy{
+                font-size: 18px;
+                text-align: center;
+                padding:20px;
+                .policyTxt{
+                    color:#4f42db;
+                }
+        
             }
         }
         

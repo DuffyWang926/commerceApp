@@ -563,6 +563,18 @@ export default class Index extends Component {
     
   }
 
+  toControl = () =>{
+    Taro.navigateTo({
+      url:'/module/tips/pages/index?type=0'
+    });
+  }
+
+  toPrivate = () =>{
+    Taro.navigateTo({
+      url:'/module/tips/pages/index?type=1'
+    });
+  }
+
   
 
 
@@ -759,9 +771,19 @@ export default class Index extends Component {
                 {uploadedNode}
               </View>
           </View>
-          <View className='publishBox' onClick = {this.publish}>
+          <View className='publishBox' >
               <View className='publishTip' >注意：为了给大家更好的购物体验，180天内没有更新信息的商品将会被删除。</View>
-              <Text className='homeButton' >发布</Text>
+              <View className='policy' >
+                <Text >查看登录时同意的</Text>
+                <Text className='policyTxt' onClick={this.toControl}>
+                《用户服务协议》
+                </Text>
+                <Text>和</Text>
+                <Text className='policyTxt'onClick={this.toPrivate}>
+                《隐私政策》
+                </Text>
+              </View>
+              <Text className='homeButton' onClick = {this.publish}>发布</Text>
           </View>
           
           <TapCom ></TapCom>

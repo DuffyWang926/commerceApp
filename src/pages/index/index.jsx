@@ -19,11 +19,12 @@ import ProductCom from "../../components/ProductCom";
 import SearchCom from "../../components/SearchCom";
 
 const bannerImgA = require("../../assets/banner/banner1.jpg")
+const bannerImgB = require("../../assets/banner/banner2.png")
 
 
 const mapStateToProps = (state)=>{
   const { home, product } = state
-  const { itemList, tapCurrent } = home
+  const { itemList, tapCurrent,  } = home
   const { type, page, pageSize, products, leftProducts,
     rightProducts,
     hasMore,
@@ -71,6 +72,11 @@ export default class Index extends Component {
         url:'/module/shareGroups/pages/index',
         imgSrc:bannerImgA
       },
+      {
+        url:'/module/shareGroups/pages/index?type=1',
+        imgSrc:bannerImgB
+      },
+      
       
     ]
     

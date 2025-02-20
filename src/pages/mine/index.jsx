@@ -13,7 +13,7 @@ import {
 const portraitImg = require("../../assets/portrait.svg")
 const clientImg = require("../../assets/icon/clientService.svg")
 import getUrlCode from "../../utils/getUrlCode";
-// let welfareAd = null
+let welfareAd = null
 
 const mapStateToProps = (state)=>{
   const { home } = state
@@ -64,22 +64,40 @@ export default class Index extends Component {
   }
 
   componentDidMount(){
-    if(wx.createRewardedVideoAd){
-      let welfareAd = wx.createRewardedVideoAd({ adUnitId: 'adunit-42f84a2e7096666f' })
-      welfareAd.onLoad(() => {
-        console.log('onLoad event emit111')
-      })
-      welfareAd.onError((err) => {
-        console.log('onError event emit', err)
-      })
-      this.setState({
-        welfareAd
-      })
-      
-    }
+    
     
     this.props.changeHomeData({ tapCurrent:2})
     
+  }
+
+  shouldComponentUpdate(props){
+    const { groupId } = props
+    // const { welfareAd } = this.state
+    
+    console.log('groupId', groupId)
+
+    if(groupId){
+      let fourth = groupId.substring(3,4)
+      if(fourth == 0){
+        if(!welfareAd){
+          if(wx.createRewardedVideoAd){
+            let welfareAdTemp = wx.createRewardedVideoAd({ adUnitId: 'adunit-42f84a2e7096666f' })
+            welfareAdTemp.onLoad(() => {
+              console.log('onLoad event emit111')
+            })
+            welfareAdTemp.onError((err) => {
+              console.log('onError event emit', err)
+            })
+            welfareAd = welfareAdTemp
+            // this.setState({
+            //   welfareAd:welfareAdTemp
+            // })
+            
+          }
+
+        }
+      }
+    }
   }
 
   
@@ -136,11 +154,11 @@ export default class Index extends Component {
   }
 
   onWelfare = () =>{
-    const { welfareAd } = this.state
+    // const { welfareAd } = this.state
     let url = '/module/welfare/index'
-    Taro.navigateTo({
-      url
-    })
+    // Taro.navigateTo({
+    //   url
+    // })
 
     welfareAd.show()
     .catch(() => {

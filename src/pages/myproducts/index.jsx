@@ -8,7 +8,8 @@ import { connect } from "../../utils/connect";
 import {
   getProducts,
   deleteProducts,
-  changePage
+  changePage,
+  checkProducts
 } from "../../actions/product";
 
 const mapStateToProps = (state)=>{
@@ -35,6 +36,9 @@ const mapDispatchToProps = (dispatch) =>{
     },
     changePage:(payload)=>{
       dispatch(changePage(payload));
+    },
+    checkProducts:(payload)=>{
+      dispatch(checkProducts(payload));
     },
     
     
@@ -85,6 +89,8 @@ export default class Index extends Component {
      } = this.props
      
     // this.props.getProducts({userId, page:userPage, pageSize:userPageSize, isRefresh:true,isAll:true})
+    // this.props.getProducts({userId, page:userPage, pageSize:userPageSize, isRefresh:true,isChecked:true})
+    
     this.props.getProducts({userId, page:userPage, pageSize:userPageSize, isRefresh:true,})
 
   }
@@ -128,6 +134,14 @@ export default class Index extends Component {
     
     
   }
+  onCheck = (e) =>{
+    const {  chooseList } = this.state
+
+    this.props.checkProducts({ids: chooseList })
+    
+    
+  }
+  
 
   render () {
     const { radioList,  } = this.state
@@ -156,6 +170,7 @@ export default class Index extends Component {
       <View className='myProductsPage'>
         <View className='productManage'>
           <Text className='homeButton' onClick={this.onDelete}>删除</Text>
+          {/* <Text className='homeButton' onClick={this.onCheck}>审核</Text> */}
         </View>
         <View className='myProductsContent'>
             <CheckboxGroup className='productsBox' onChange={(e) =>{this.onCheckChange(e)}}>
